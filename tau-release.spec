@@ -1,0 +1,176 @@
+%define release_name Thirty Five
+%define dist_version 35
+
+Summary:        tauOS release files
+Name:           tau-release
+Version:        35
+Release:        %autorelease
+License:        GPLv3
+URL:            https://tau.innatical.com
+Source0:    	https://github.com/tauLinux/%{name}/archive/refs/tags/%{name}-%{version}.tar.gz
+BuildArch:      noarch
+Provides:       fedora-release = %{version}-%{release}
+Provides:       fedora-release-variant = %{version}-%{release}
+Provides:       system-release
+Provides:       system-release(%{version})
+Provides:       base-module(platform:f%{version})
+Conflicts:      generic-release
+
+# INCLUDE THIS
+Requires:       fedora-release-ostree-desktop = %{version}-%{release}
+Obsoletes:      fedora-release-ostree-counting < 35-0.32
+
+# We could use the Third-party repos (https://src.fedoraproject.org/rpms/fedora-release/blob/f35/f/fedora-release.spec#_585)
+
+%description
+tauOS release files such as various /etc/ files that define the release
+
+%package identity
+Summary:        Package providing the identity for tauOS
+Provides:       fedora-release-identity = %{version}-%{release}
+Conflicts:      fedora-release-identity
+%description identity
+Provides the necessary files for a tauOS installation
+	
+%package ostree-desktop
+Summary:        Configuration package for rpm-ostree to add rpm-ostree polkit rules
+	
+%description ostree-desktop
+Configuration package for rpm-ostree to add rpm-ostree polkit rules
+
+%prep
+%setup -q
+%build
+
+%install	
+install -d %{buildroot}%{_prefix}/lib
+echo "tauOS release %{version} (%{release_name})" > %{buildroot}%{_prefix}/lib/tau-release
+
+# Not sure what this is used for
+# echo "cpe:/o:fedoraproject:fedora:%{version}" > %{buildroot}%{_prefix}/lib/system-release-cpe
+
+# Symlink the -release files
+install -d %{buildroot}%{_sysconfdir}
+ln -s ../usr/lib/tau-release %{buildroot}%{_sysconfdir}/tau-release
+ln -s tau-release %{buildroot}%{_sysconfdir}/redhat-release
+ln -s tau-release %{buildroot}%{_sysconfdir}/system-release
+ln -s tau-release %{buildroot}%{_sysconfdir}/fedora-release
+
+# Create the common os-release file
+%{lua:
+  function starts_with(str, start)
+   return str:sub(1, #start) == start
+  end
+}
+	
+%define starts_with(str,prefix) (%{expand:%%{lua:print(starts_with(%1, %2) and "1" or "0")}})
+%if %{starts_with "a%{release}" "a0"}
+  %global prerelease \ Prerelease
+%endif
+
+	
+cat << EOF >> os-release
+NAME="tauOS"
+VERSION="%{dist_version} (%{release_name}%{?prerelease})"
+ID=tau
+VERSION_ID=%{dist_version}
+VERSION_CODENAME=""
+PLATFORM_ID="platform:f%{dist_version}"
+PRETTY_NAME="tauOS %{dist_version} (%{release_name}%{?prerelease})"
+ANSI_COLOR="1;34"
+LOGO=tau-logo
+HOME_URL="https://tau.innatical.com"
+DOCUMENTATION_URL="https://wiki.tau.innatical.com"
+SUPPORT_URL="https://github.com/tauLinux/meta/discussions"
+BUG_REPORT_URL="https://github.com/tauLinux/meta/issues"
+EOF
+
+# Create the common /etc/issue
+echo "\S" > %{buildroot}%{_prefix}/lib/issue
+echo "Kernel \r on an \m (\l)" >> %{buildroot}%{_prefix}/lib/issue
+echo >> %{buildroot}%{_prefix}/lib/issue
+ln -s ../usr/lib/issue %{buildroot}%{_sysconfdir}/issue
+
+	
+# Create /etc/issue.net
+echo "\S" > %{buildroot}%{_prefix}/lib/issue.net
+echo "Kernel \r on an \m (\l)" >> %{buildroot}%{_prefix}/lib/issue.net
+ln -s ../usr/lib/issue.net %{buildroot}%{_sysconfdir}/issue.net
+
+# Create /etc/issue.d
+mkdir -p %{buildroot}%{_sysconfdir}/issue.d
+
+cp -p os-release %{buildroot}%{_prefix}/lib/os-release
+
+# Override the list of enabled gnome-shell extensions
+install -Dm0644 org.gnome.shell.gschema.override -t %{buildroot}%{_datadir}/glib-2.0/schemas/
+	
+# Install rpm-ostree polkit rules
+install -Dm0644 org.projectatomic.rpmostree1.rules -t %{buildroot}%{_datadir}/polkit-1/rules.d/
+
+# Statically enable rpm-ostree-countme timer
+install -dm0755 %{buildroot}%{_unitdir}/timers.target.wants/
+ln -snf %{_unitdir}/rpm-ostree-countme.timer %{buildroot}%{_unitdir}/timers.target.wants/
+
+	
+# Create the symlink for /etc/os-release
+ln -s ../usr/lib/os-release %{buildroot}%{_sysconfdir}/os-release
+
+# Set up the dist tag macros. These are gonna be the same as Fedora, for compatibility
+install -d -m 755 %{buildroot}%{_rpmconfigdir}/macros.d
+cat >> %{buildroot}%{_rpmconfigdir}/macros.d/macros.dist << EOF
+# dist macros.
+	
+%%__bootstrap         ~bootstrap
+%%fedora              %{dist_version}
+%%fc%{dist_version}                1
+%%dist                %%{!?distprefix0:%%{?distprefix}}%%{expand:%%{lua:for i=0,9999 do print("%%{?distprefix" .. i .."}") end}}.fc%%{fedora}%%{?with_bootstrap:%{__bootstrap}}
+EOF
+
+	
+# Install licenses
+mkdir -p licenses
+install -pm 0644 LICENSE licenses/LICENSE
+
+	
+# Default system wide
+install -Dm0644 display-manager.preset -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
+install -Dm0644 default.preset -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
+install -Dm0644 default-user.preset -t %{buildroot}%{_prefix}/lib/systemd/user-preset/
+# The same file is installed in two places with identical contents
+install -Dm0644 default-disable.preset -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
+install -Dm0644 default-disable.preset -t %{buildroot}%{_prefix}/lib/systemd/user-preset/
+
+	
+%files
+%license licenses/LICENSE
+%{_prefix}/lib/os-release
+%{_prefix}/lib/tau-release
+%{_sysconfdir}/os-release
+%{_sysconfdir}/tau-release
+%{_sysconfdir}/fedora-release
+%{_sysconfdir}/redhat-release
+%{_sysconfdir}/system-release
+%attr(0644,root,root) %{_prefix}/lib/issue
+%config(noreplace) %{_sysconfdir}/issue
+%attr(0644,root,root) %{_prefix}/lib/issue.net
+%config(noreplace) %{_sysconfdir}/issue.net
+%dir %{_sysconfdir}/issue.d
+%attr(0644,root,root) %{_rpmconfigdir}/macros.d/macros.dist
+%dir %{_prefix}/lib/systemd/user-preset/
+%{_prefix}/lib/systemd/user-preset/default-user.preset
+%{_prefix}/lib/systemd/user-preset/default-disable.preset
+%dir %{_prefix}/lib/systemd/system-preset/
+%{_prefix}/lib/systemd/system-preset/display-manager.preset
+%{_prefix}/lib/systemd/system-preset/default.preset
+%{_prefix}/lib/systemd/system-preset/default-disable.preset
+
+%files identity
+%{_datadir}/glib-2.0/schemas/org.gnome.shell.gschema.override
+%{_unitdir}/timers.target.wants/rpm-ostree-countme.timer
+
+%files ostree-desktop
+%attr(0644,root,root) %{_prefix}/share/polkit-1/rules.d/org.projectatomic.rpmostree1.rules
+
+%changelog
+%autochangelog
