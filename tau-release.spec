@@ -16,8 +16,7 @@ Provides:       system-release(%{version})
 Provides:       base-module(platform:f%{version})
 Conflicts:      generic-release
 
-# INCLUDE THIS
-Requires:       fedora-release-ostree-desktop = %{version}-%{release}
+Requires:       tau-release-ostree-desktop
 Obsoletes:      fedora-release-ostree-counting < 35-0.32
 
 # We could use the Third-party repos (https://src.fedoraproject.org/rpms/fedora-release/blob/f35/f/fedora-release.spec#_585)
