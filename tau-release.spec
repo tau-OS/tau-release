@@ -161,6 +161,7 @@ install -Dm0644 99-default-disable.preset -t %{buildroot}%{_prefix}/lib/systemd/
 %{_prefix}/lib/systemd/user-preset/90-default-user.preset
 %{_prefix}/lib/systemd/user-preset/99-default-disable.preset
 %dir %{_prefix}/lib/systemd/system-preset/
+%{_prefix}/lib/systemd/system-preset/80-tau.preset
 %{_prefix}/lib/systemd/system-preset/85-display-manager.preset
 %{_prefix}/lib/systemd/system-preset/90-default.preset
 %{_prefix}/lib/systemd/system-preset/99-default-disable.preset
