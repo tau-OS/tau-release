@@ -102,6 +102,7 @@ mkdir -p %{buildroot}%{_sysconfdir}/issue.d
 cp -p os-release %{buildroot}%{_prefix}/lib/os-release
 
 # Override the list of enabled gnome-shell extensions
+install -Dm0644 80-tau.preset -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
 install -Dm0644 org.gnome.shell.gschema.override -t %{buildroot}%{_datadir}/glib-2.0/schemas/
 	
 # Install rpm-ostree polkit rules
@@ -133,12 +134,12 @@ install -pm 0644 LICENSE licenses/LICENSE
 
 	
 # Default system wide
-install -Dm0644 display-manager.preset -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
-install -Dm0644 default.preset -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
-install -Dm0644 default-user.preset -t %{buildroot}%{_prefix}/lib/systemd/user-preset/
+install -Dm0644 85-display-manager.preset -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
+install -Dm0644 90-default.preset -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
+install -Dm0644 90-default-user.preset -t %{buildroot}%{_prefix}/lib/systemd/user-preset/
 # The same file is installed in two places with identical contents
-install -Dm0644 default-disable.preset -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
-install -Dm0644 default-disable.preset -t %{buildroot}%{_prefix}/lib/systemd/user-preset/
+install -Dm0644 99-default-disable.preset -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
+install -Dm0644 99-default-disable.preset -t %{buildroot}%{_prefix}/lib/systemd/user-preset/
 
 	
 %files
@@ -157,12 +158,12 @@ install -Dm0644 default-disable.preset -t %{buildroot}%{_prefix}/lib/systemd/use
 %dir %{_sysconfdir}/issue.d
 %attr(0644,root,root) %{_rpmconfigdir}/macros.d/macros.dist
 %dir %{_prefix}/lib/systemd/user-preset/
-%{_prefix}/lib/systemd/user-preset/default-user.preset
-%{_prefix}/lib/systemd/user-preset/default-disable.preset
+%{_prefix}/lib/systemd/user-preset/90-default-user.preset
+%{_prefix}/lib/systemd/user-preset/99-default-disable.preset
 %dir %{_prefix}/lib/systemd/system-preset/
-%{_prefix}/lib/systemd/system-preset/display-manager.preset
-%{_prefix}/lib/systemd/system-preset/default.preset
-%{_prefix}/lib/systemd/system-preset/default-disable.preset
+%{_prefix}/lib/systemd/system-preset/85-display-manager.preset
+%{_prefix}/lib/systemd/system-preset/90-default.preset
+%{_prefix}/lib/systemd/system-preset/99-default-disable.preset
 
 %files identity
 %{_datadir}/glib-2.0/schemas/org.gnome.shell.gschema.override

@@ -364,24 +364,3 @@ enable uresourced.service
 # enable power-profiles-daemon
 # https://pagure.io/fedora-workstation/issue/191
 enable power-profiles-daemon.service
-
-
-	
-#
-# tauOS
-#
-	
-# disable sshd socket by default on workstation
-disable sshd.socket
-	
-# disable sshd service by default on workstation
-disable sshd.service
-	
-# enable cups on-demand socket activation by default on workstation
-# https://pagure.io/fedora-workstation/issue/8
-enable cups.socket
-enable cups.path
-disable cups.service
-	
-# enable low-memory-monitor for GMemoryMonitor API
-enable low-memory-monitor.service
