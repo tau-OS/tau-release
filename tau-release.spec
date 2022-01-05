@@ -1,19 +1,20 @@
-%define release_name Thirty Five
+%define release_name Prerelease
 %define dist_version 35
+%define codename Martin Perl
 
 Summary:        tauOS release files
 Name:           tau-release
-Version:        35
-Release:        %autorelease
+Version:        1
+Release:        2
 License:        GPLv3
 URL:            https://tau.innatical.com
-Source0:    	https://github.com/tauLinux/%{name}/archive/refs/tags/%{name}-%{version}.tar.gz
+Source0:        https://github.com/tauLinux/%{name}/archive/refs/tags/%{name}-%{version}.tar.gz
 BuildArch:      noarch
-Provides:       fedora-release = %{version}-%{release}
-Provides:       fedora-release-variant = %{version}-%{release}
-Provides:       system-release
-Provides:       system-release(%{version})
-Provides:       base-module(platform:f%{version})
+Provides:       fedora-release = %{dist_version}-%{release}
+Provides:       fedora-release-variant = %{dist_version}-%{release}
+Provides:       system-release = %{dist_version}-%{release}
+Provides:       system-release(%{dist_version}) = %{dist_version}-%{release}
+Provides:       base-module(platform:f%{dist_version}) = %{dist_version}-%{release}
 Conflicts:      generic-release
 
 Requires:       tau-release-ostree-desktop
@@ -26,14 +27,14 @@ tauOS release files such as various /etc/ files that define the release
 
 %package identity
 Summary:        Package providing the identity for tauOS
-Provides:       fedora-release-identity = %{version}-%{release}
+Provides:       fedora-release-identity = %{dist_version}-%{release}
 Conflicts:      fedora-release-identity
 %description identity
 Provides the necessary files for a tauOS installation
-	
+
 %package ostree-desktop
 Summary:        Configuration package for rpm-ostree to add rpm-ostree polkit rules
-	
+
 %description ostree-desktop
 Configuration package for rpm-ostree to add rpm-ostree polkit rules
 
@@ -61,21 +62,21 @@ ln -s tau-release %{buildroot}%{_sysconfdir}/fedora-release
    return str:sub(1, #start) == start
   end
 }
-	
-%define starts_with(str,prefix) (%{expand:%%{lua:print(starts_with(%1, %2) and "1" or "0")}})
-%if %{starts_with "a%{release}" "a0"}
-  %global prerelease \ Prerelease
-%endif
 
-	
+# %define starts_with(str,prefix) (%{expand:%%{lua:print(starts_with(%1, %2) and "1" or "0")}})
+# %if %{starts_with "a%{release}" "a0"}
+#   %global prerelease \ Prerelease
+# %endif
+
 cat << EOF >> os-release
 NAME="tauOS"
-VERSION="%{dist_version} (%{release_name}%{?prerelease})"
+VERSION="%{version} %{release_name}"
 ID=tau
+ID_LIKE=fedora
 VERSION_ID=%{dist_version}
 VERSION_CODENAME=""
 PLATFORM_ID="platform:f%{dist_version}"
-PRETTY_NAME="tauOS %{dist_version} (%{release_name}%{?prerelease})"
+PRETTY_NAME="tauOS %{version} \"%{codename}\" (%{release_name})"
 ANSI_COLOR="1;34"
 LOGO=tau-logo
 HOME_URL="https://tau.innatical.com"
@@ -90,7 +91,6 @@ echo "Kernel \r on an \m (\l)" >> %{buildroot}%{_prefix}/lib/issue
 echo >> %{buildroot}%{_prefix}/lib/issue
 ln -s ../usr/lib/issue %{buildroot}%{_sysconfdir}/issue
 
-	
 # Create /etc/issue.net
 echo "\S" > %{buildroot}%{_prefix}/lib/issue.net
 echo "Kernel \r on an \m (\l)" >> %{buildroot}%{_prefix}/lib/issue.net
@@ -104,7 +104,7 @@ cp -p os-release %{buildroot}%{_prefix}/lib/os-release
 # Override the list of enabled gnome-shell extensions
 install -Dm0644 80-tau.preset -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
 install -Dm0644 org.gnome.shell.gschema.override -t %{buildroot}%{_datadir}/glib-2.0/schemas/
-	
+
 # Install rpm-ostree polkit rules
 install -Dm0644 org.projectatomic.rpmostree1.rules -t %{buildroot}%{_datadir}/polkit-1/rules.d/
 
@@ -112,7 +112,7 @@ install -Dm0644 org.projectatomic.rpmostree1.rules -t %{buildroot}%{_datadir}/po
 install -dm0755 %{buildroot}%{_unitdir}/timers.target.wants/
 ln -snf %{_unitdir}/rpm-ostree-countme.timer %{buildroot}%{_unitdir}/timers.target.wants/
 
-	
+
 # Create the symlink for /etc/os-release
 ln -s ../usr/lib/os-release %{buildroot}%{_sysconfdir}/os-release
 
@@ -120,19 +120,19 @@ ln -s ../usr/lib/os-release %{buildroot}%{_sysconfdir}/os-release
 install -d -m 755 %{buildroot}%{_rpmconfigdir}/macros.d
 cat >> %{buildroot}%{_rpmconfigdir}/macros.d/macros.dist << EOF
 # dist macros.
-	
+
 %%__bootstrap         ~bootstrap
 %%fedora              %{dist_version}
 %%fc%{dist_version}                1
 %%dist                %%{!?distprefix0:%%{?distprefix}}%%{expand:%%{lua:for i=0,9999 do print("%%{?distprefix" .. i .."}") end}}.fc%%{fedora}%%{?with_bootstrap:%{__bootstrap}}
 EOF
 
-	
+
 # Install licenses
 mkdir -p licenses
 install -pm 0644 LICENSE licenses/LICENSE
 
-	
+
 # Default system wide
 install -Dm0644 85-display-manager.preset -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
 install -Dm0644 90-default.preset -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
@@ -141,7 +141,7 @@ install -Dm0644 90-default-user.preset -t %{buildroot}%{_prefix}/lib/systemd/use
 install -Dm0644 99-default-disable.preset -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
 install -Dm0644 99-default-disable.preset -t %{buildroot}%{_prefix}/lib/systemd/user-preset/
 
-	
+
 %files
 %license licenses/LICENSE
 %{_prefix}/lib/os-release
