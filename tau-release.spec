@@ -109,7 +109,9 @@ cp -p os-release \
       %{buildroot}%{_prefix}/lib/os-release.kde
 echo "VARIANT=\"KDE\"" >> %{buildroot}%{_prefix}/lib/os-release.kde
 echo "VARIANT_ID=kde" >> %{buildroot}%{_prefix}/lib/os-release.kde
-sed -i -e "s|(%{release_name})|(KDE %{release_name})|g" %{buildroot}%{_prefix}/lib/os-release.kde
+sed -i -e "s|tauOS %{version}|tauOS KDE %{version}|g" %{buildroot}%{_prefix}/lib/os-release.kde
+
+# TODO you could use a custom codename but idc
 
 # Override the list of enabled gnome-shell extensions
 install -Dm0644 80-tau.preset -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
