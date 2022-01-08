@@ -5,7 +5,7 @@
 Summary:        tauOS release files
 Name:           tau-release
 Version:        1
-Release:        2
+Release:        3
 License:        GPLv3
 URL:            https://tau.innatical.com
 Source0:        https://github.com/tauLinux/%{name}/archive/refs/tags/%{name}-%{version}.tar.gz
@@ -25,12 +25,22 @@ Obsoletes:      fedora-release-ostree-counting < 35-0.32
 %description
 tauOS release files such as various /etc/ files that define the release
 
-%package identity
-Summary:        Package providing the identity for tauOS
+%package identity-gnome
+Summary:        Package providing the identity for tauOS GNOME Shell
 Provides:       fedora-release-identity = %{dist_version}-%{release}
 Conflicts:      fedora-release-identity
-%description identity
-Provides the necessary files for a tauOS installation
+%description identity-gnome
+Provides the necessary files for a tauOS GNOME Shell installation
+
+%package identity-kde
+Summary:        Package providing the identity for tauOS KDE Plasma
+RemovePathPostfixes: .kde
+Provides:       fedora-release-identity = %{dist_version}-%{release}
+Conflicts:      fedora-release-identity
+
+%description identity-kde
+Provides the necessary files for a tauOS KDE Plasma installation
+
 
 %package ostree-desktop
 Summary:        Configuration package for rpm-ostree to add rpm-ostree polkit rules
@@ -45,10 +55,6 @@ Configuration package for rpm-ostree to add rpm-ostree polkit rules
 %install	
 install -d %{buildroot}%{_prefix}/lib
 echo "tauOS release %{version} (%{release_name})" > %{buildroot}%{_prefix}/lib/tau-release
-
-# Not sure what this is used for
-# echo "cpe:/o:fedoraproject:fedora:%{version}" > %{buildroot}%{_prefix}/lib/system-release-cpe
-
 # Symlink the -release files
 install -d %{buildroot}%{_sysconfdir}
 ln -s ../usr/lib/tau-release %{buildroot}%{_sysconfdir}/tau-release
@@ -62,11 +68,6 @@ ln -s tau-release %{buildroot}%{_sysconfdir}/fedora-release
    return str:sub(1, #start) == start
   end
 }
-
-# %define starts_with(str,prefix) (%{expand:%%{lua:print(starts_with(%1, %2) and "1" or "0")}})
-# %if %{starts_with "a%{release}" "a0"}
-#   %global prerelease \ Prerelease
-# %endif
 
 cat << EOF >> os-release
 NAME="tauOS"
@@ -100,6 +101,15 @@ ln -s ../usr/lib/issue.net %{buildroot}%{_sysconfdir}/issue.net
 mkdir -p %{buildroot}%{_sysconfdir}/issue.d
 
 cp -p os-release %{buildroot}%{_prefix}/lib/os-release
+
+# Modify os-release for different editions
+
+# KDE
+cp -p os-release \
+      %{buildroot}%{_prefix}/lib/os-release.kde
+echo "VARIANT=\"KDE\"" >> %{buildroot}%{_prefix}/lib/os-release.kde
+echo "VARIANT_ID=kde" >> %{buildroot}%{_prefix}/lib/os-release.kde
+sed -i -e "s|(%{release_name})|(KDE %{release_name})|g" %{buildroot}%{_prefix}/lib/os-release.kde
 
 # Override the list of enabled gnome-shell extensions
 install -Dm0644 80-tau.preset -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
@@ -166,8 +176,12 @@ install -Dm0644 99-default-disable.preset -t %{buildroot}%{_prefix}/lib/systemd/
 %{_prefix}/lib/systemd/system-preset/90-default.preset
 %{_prefix}/lib/systemd/system-preset/99-default-disable.preset
 
-%files identity
+%files identity-gnome
 %{_datadir}/glib-2.0/schemas/org.gnome.shell.gschema.override
+%{_unitdir}/timers.target.wants/rpm-ostree-countme.timer
+
+%files identity-kde
+%{_prefix}/lib/os-release.kde
 %{_unitdir}/timers.target.wants/rpm-ostree-countme.timer
 
 %files ostree-desktop
