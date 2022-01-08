@@ -17,6 +17,7 @@ Provides:       system-release(%{dist_version}) = %{dist_version}-%{release}
 Provides:       base-module(platform:f%{dist_version}) = %{dist_version}-%{release}
 Conflicts:      generic-release
 
+Requires:       tau-release-identity
 Requires:       tau-release-ostree-desktop
 Obsoletes:      fedora-release-ostree-counting < 35-0.32
 
@@ -25,12 +26,13 @@ Obsoletes:      fedora-release-ostree-counting < 35-0.32
 %description
 tauOS release files such as various /etc/ files that define the release
 
-%package identity-gnome
-Summary:        Package providing the identity for tauOS GNOME Shell
+%package identity
+Summary:        Package providing the identity for tauOS
 Provides:       fedora-release-identity = %{dist_version}-%{release}
+Provides:       tau-release-identity-gnome  = %{dist_version}-%{release}
 Conflicts:      fedora-release-identity
-%description identity-gnome
-Provides the necessary files for a tauOS GNOME Shell installation
+%description identity
+Provides the necessary files for a tauOS installation
 
 %package identity-kde
 Summary:        Package providing the identity for tauOS KDE Plasma
@@ -178,7 +180,7 @@ install -Dm0644 99-default-disable.preset -t %{buildroot}%{_prefix}/lib/systemd/
 %{_prefix}/lib/systemd/system-preset/90-default.preset
 %{_prefix}/lib/systemd/system-preset/99-default-disable.preset
 
-%files identity-gnome
+%files identity
 %{_datadir}/glib-2.0/schemas/org.gnome.shell.gschema.override
 %{_unitdir}/timers.target.wants/rpm-ostree-countme.timer
 
