@@ -1,3 +1,5 @@
+%define provides_dist_version 37
+
 %define release_name Prerelease
 %define dist_version 35
 %define codename Martin Perl
@@ -16,11 +18,11 @@ License:        GPLv3
 URL:            https://tau.innatical.com
 Source0:        https://github.com/tauLinux/%{name}/archive/refs/tags/%{name}-%{version}.tar.gz
 BuildArch:      noarch
-Provides:       fedora-release = %{dist_version}-%{release}
-Provides:       fedora-release-variant = %{dist_version}-%{release}
-Provides:       system-release = %{dist_version}-%{release}
-Provides:       system-release(%{dist_version}) = %{dist_version}-%{release}
-Provides:       base-module(platform:f%{dist_version}) = %{dist_version}-%{release}
+Provides:       fedora-release <= %{provides_dist_version}-%{release}
+Provides:       fedora-release-variant <= %{provides_dist_version}-%{release}
+Provides:       system-release <= %{provides_dist_version}-%{release}
+Provides:       system-release(%{dist_version}) <= %{provides_dist_version}-%{release}
+Provides:       base-module(platform:f%{dist_version}) <= %{provides_dist_version}-%{release}
 Conflicts:      generic-release
 
 Requires:       tau-release-identity
