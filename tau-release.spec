@@ -2,6 +2,12 @@
 %define dist_version 35
 %define codename Martin Perl
 
+# Enterprise
+%define el_platform     8
+%define el_dist_version 8.5
+%define el_version      22
+%define el_codename     Stephen Hawking
+
 Summary:        tauOS release files
 Name:           tau-release
 Version:        1
@@ -43,6 +49,16 @@ Conflicts:      fedora-release-identity
 %description identity-kde
 Provides the necessary files for a tauOS KDE Plasma installation
 
+%package identity-enterprise
+Summary:        Package providing the identity for tauOS Enterprise
+Version:        %{el_version}
+RemovePathPostfixes: .el
+Provides:       fedora-release-identity = %{dist_version}-%{release}
+Conflicts:      fedora-release-identity
+
+%description identity-enterprise
+Provides the necessary files for a tauOS Enterprise installation
+
 
 %package ostree-desktop
 Summary:        Configuration package for rpm-ostree to add rpm-ostree polkit rules
@@ -77,7 +93,7 @@ VERSION="%{version} %{release_name}"
 ID=tau
 ID_LIKE=fedora
 VERSION_ID=%{dist_version}
-VERSION_CODENAME=""
+VERSION_CODENAME="%{codename}"
 PLATFORM_ID="platform:f%{dist_version}"
 PRETTY_NAME="tauOS %{version} \"%{codename}\" (%{release_name})"
 ANSI_COLOR="1;34"
@@ -105,6 +121,19 @@ mkdir -p %{buildroot}%{_sysconfdir}/issue.d
 cp -p os-release %{buildroot}%{_prefix}/lib/os-release
 
 # Modify os-release for different editions
+
+# Enterprise
+cp -p os-release \
+      %{buildroot}%{_prefix}/lib/os-release.el
+sed -i -e "s|tauOS|tauOS Enterprise|g" %{buildroot}%{_prefix}/lib/os-release.el
+sed -i -e "s|%{version} %{release_name}|%{version} (%{release_name})|g" %{buildroot}%{_prefix}/lib/os-release.el
+sed -i -e 's| \\"%{codename}\\"||g' %{buildroot}%{_prefix}/lib/os-release.el
+sed -i -e "s|platform:f%{dist_version}|platform:el%{el_platform}|g" %{buildroot}%{_prefix}/lib/os-release.el
+sed -i -e "s|%{dist_version}|%{el_dist_version}|g" %{buildroot}%{_prefix}/lib/os-release.el
+sed -i -e "s|%{release_name}|%{el_codename}|g" %{buildroot}%{_prefix}/lib/os-release.el
+sed -i -e "s|%{codename}|%{el_codename}|g" %{buildroot}%{_prefix}/lib/os-release.el
+sed -i -e "s|ID=tau|ID=tauenterprise|g" %{buildroot}%{_prefix}/lib/os-release.el
+sed -i -e "s|fedora|\"rhel centos fedora almalinux\"|g" %{buildroot}%{_prefix}/lib/os-release.el
 
 # KDE
 cp -p os-release \
@@ -186,6 +215,10 @@ install -Dm0644 99-default-disable.preset -t %{buildroot}%{_prefix}/lib/systemd/
 
 %files identity-kde
 %{_prefix}/lib/os-release.kde
+%{_unitdir}/timers.target.wants/rpm-ostree-countme.timer
+
+%files identity-enterprise
+%{_prefix}/lib/os-release.el
 %{_unitdir}/timers.target.wants/rpm-ostree-countme.timer
 
 %files ostree-desktop
