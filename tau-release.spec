@@ -240,6 +240,10 @@ install -Dm0644 99-default-disable.preset -t %{buildroot}%{_prefix}/lib/systemd/
 %{_prefix}/lib/os-release.kde
 %{_unitdir}/timers.target.wants/rpm-ostree-countme.timer
 
+%files identity-mate
+%{_prefix}/lib/os-release.mate
+%{_unitdir}/timers.target.wants/rpm-ostree-countme.timer
+
 %files identity-enterprise
 %{_prefix}/lib/os-release.el
 %{_unitdir}/timers.target.wants/rpm-ostree-countme.timer
