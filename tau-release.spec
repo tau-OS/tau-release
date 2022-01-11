@@ -1,3 +1,4 @@
+#Core
 %define release_name Prerelease
 %define dist_version 35
 %define codename Martin Perl
@@ -47,7 +48,22 @@ Provides:       fedora-release-identity = %{dist_version}-%{release}
 Conflicts:      fedora-release-identity
 
 %description identity-kde
-Provides the necessary files for a tauOS KDE Plasma installation
+Provides the necessary files for a tauOS KDE Dragon installation
+
+%package identity-mate
+Summary:        Package providing the identity for tauOS Dragon
+RemovePathPostfixes: .kde
+Provides:       fedora-release-identity = %{dist_version}-%{release}
+Conflicts:      fedora-release-identity
+
+%description identity-mate
+Provides the necessary files for a tauOS Cimarrón installation
+
+%package identity-mate
+Summary:        Package providing the identity for tauOS Cimarrón
+RemovePathPostfixes: .mate
+Provides:       fedora-release-identity = %{dist_version}-%{release}
+Conflicts:      fedora-release-identity
 
 %package identity-enterprise
 Summary:        Package providing the identity for tauOS Enterprise
@@ -138,9 +154,16 @@ sed -i -e "s|fedora|\"rhel centos fedora almalinux\"|g" %{buildroot}%{_prefix}/l
 # KDE
 cp -p os-release \
       %{buildroot}%{_prefix}/lib/os-release.kde
-echo "VARIANT=\"KDE\"" >> %{buildroot}%{_prefix}/lib/os-release.kde
+echo "VARIANT=\"Dragon\"" >> %{buildroot}%{_prefix}/lib/os-release.kde
 echo "VARIANT_ID=kde" >> %{buildroot}%{_prefix}/lib/os-release.kde
-sed -i -e "s|tauOS %{version}|tauOS KDE %{version}|g" %{buildroot}%{_prefix}/lib/os-release.kde
+sed -i -e "s|tauOS %{version}|tauOS Dragon %{version}|g" %{buildroot}%{_prefix}/lib/os-release.kde
+
+# MATE
+cp -p os-release \
+      %{buildroot}%{_prefix}/lib/os-release.mate
+echo "VARIANT=\"Cimarrón\"" >> %{buildroot}%{_prefix}/lib/os-release.mate
+echo "VARIANT_ID=mate" >> %{buildroot}%{_prefix}/lib/os-release.mate
+sed -i -e "s|tauOS %{version}|tauOS Cimarrón %{version}|g" %{buildroot}%{_prefix}/lib/os-release.mate
 
 # TODO you could use a custom codename but idc
 
