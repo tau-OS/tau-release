@@ -1,4 +1,4 @@
-#Core
+# Core
 %define release_name Prerelease
 %define dist_version 35
 %define codename Martin Perl
@@ -42,28 +42,22 @@ Conflicts:      fedora-release-identity
 Provides the necessary files for a tauOS installation
 
 %package identity-kde
-Summary:        Package providing the identity for tauOS KDE Plasma
-RemovePathPostfixes: .kde
-Provides:       fedora-release-identity = %{dist_version}-%{release}
-Conflicts:      fedora-release-identity
-
-%description identity-kde
-Provides the necessary files for a tauOS KDE Dragon installation
-
-%package identity-mate
 Summary:        Package providing the identity for tauOS Dragon
 RemovePathPostfixes: .kde
 Provides:       fedora-release-identity = %{dist_version}-%{release}
 Conflicts:      fedora-release-identity
 
-%description identity-mate
-Provides the necessary files for a tauOS Cimarrón installation
+%description identity-kde
+Provides the necessary files for tauOS KDE Dragon
 
 %package identity-mate
 Summary:        Package providing the identity for tauOS Cimarrón
 RemovePathPostfixes: .mate
 Provides:       fedora-release-identity = %{dist_version}-%{release}
 Conflicts:      fedora-release-identity
+
+%description identity-mate
+Provides the necessary files for tauOS Cimarrón
 
 %package identity-enterprise
 Summary:        Package providing the identity for tauOS Enterprise
