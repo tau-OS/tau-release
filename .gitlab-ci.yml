@@ -8,6 +8,8 @@ stages:
 
 build-job:
   stage: build
+  before_script:
+    - sudo dnf install -y systemd-rpm-macros
   variables:
     PACKAGE_VERSION: "1.0.0"
     PACKAGE_NAME: "tau-release"
