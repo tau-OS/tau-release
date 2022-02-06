@@ -1,0 +1,15 @@
+include:
+  project: 'tauOS/ci'
+  file: '/.rpm-build-template.yml'
+
+stages:
+  - setup
+  - build
+
+build-job:
+  stage: build
+  variables:
+    PACKAGE_VERSION: "1.0.0"
+    PACKAGE_NAME: "tau-release"
+    PACKAGE_ARCH: "noarch"
+  extends: .build

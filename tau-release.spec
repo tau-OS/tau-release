@@ -3,19 +3,13 @@
 %define dist_version 35
 %define codename Martin Perl
 
-# Enterprise
-%define el_platform     8
-%define el_dist_version 8.5
-%define el_version      22
-%define el_codename     Stephen Hawking
-
 Summary:        tauOS release files
 Name:           tau-release
-Version:        1
-Release:        3
+Version:        1.0.0
+Release:        1
 License:        GPLv3
-URL:            https://tau.innatical.com
-Source0:        https://github.com/tauLinux/%{name}/archive/refs/tags/%{name}-%{version}.tar.gz
+URL:            https://tauos.co
+Source0:        %{name}-%{version}.tar.gz
 BuildArch:      noarch
 Provides:       fedora-release = %{dist_version}-%{release}
 Provides:       fedora-release-variant = %{dist_version}-%{release}
@@ -59,17 +53,6 @@ Conflicts:      fedora-release-identity
 %description identity-mate
 Provides the necessary files for tauOS Cimarrón
 
-%package identity-enterprise
-Summary:        Package providing the identity for tauOS Enterprise
-Version:        %{el_version}
-RemovePathPostfixes: .el
-Provides:       fedora-release-identity = %{dist_version}-%{release}
-Conflicts:      fedora-release-identity
-
-%description identity-enterprise
-Provides the necessary files for a tauOS Enterprise installation
-
-
 %package ostree-desktop
 Summary:        Configuration package for rpm-ostree to add rpm-ostree polkit rules
 
@@ -108,8 +91,8 @@ PLATFORM_ID="platform:f%{dist_version}"
 PRETTY_NAME="tauOS %{version} \"%{codename}\" (%{release_name})"
 ANSI_COLOR="1;34"
 LOGO=tau-logo
-HOME_URL="https://tau.innatical.com"
-DOCUMENTATION_URL="https://wiki.tau.innatical.com"
+HOME_URL="https://tauos.co"
+DOCUMENTATION_URL="https://wiki.tauos.co"
 SUPPORT_URL="https://github.com/tauLinux/meta/discussions"
 BUG_REPORT_URL="https://github.com/tauLinux/meta/issues"
 EOF
@@ -131,19 +114,6 @@ mkdir -p %{buildroot}%{_sysconfdir}/issue.d
 cp -p os-release %{buildroot}%{_prefix}/lib/os-release
 
 # Modify os-release for different editions
-
-# Enterprise
-cp -p os-release \
-      %{buildroot}%{_prefix}/lib/os-release.el
-sed -i -e "s|tauOS|tauOS Enterprise|g" %{buildroot}%{_prefix}/lib/os-release.el
-sed -i -e "s|%{version} %{release_name}|%{version} (%{release_name})|g" %{buildroot}%{_prefix}/lib/os-release.el
-sed -i -e 's| \\"%{codename}\\"||g' %{buildroot}%{_prefix}/lib/os-release.el
-sed -i -e "s|platform:f%{dist_version}|platform:el%{el_platform}|g" %{buildroot}%{_prefix}/lib/os-release.el
-sed -i -e "s|%{dist_version}|%{el_dist_version}|g" %{buildroot}%{_prefix}/lib/os-release.el
-sed -i -e "s|%{release_name}|%{el_codename}|g" %{buildroot}%{_prefix}/lib/os-release.el
-sed -i -e "s|%{codename}|%{el_codename}|g" %{buildroot}%{_prefix}/lib/os-release.el
-sed -i -e "s|ID=tau|ID=tauenterprise|g" %{buildroot}%{_prefix}/lib/os-release.el
-sed -i -e "s|fedora|\"rhel centos fedora almalinux\"|g" %{buildroot}%{_prefix}/lib/os-release.el
 
 # KDE
 cp -p os-release \
@@ -236,10 +206,6 @@ install -Dm0644 99-default-disable.preset -t %{buildroot}%{_prefix}/lib/systemd/
 
 %files identity-mate
 %{_prefix}/lib/os-release.mate
-%{_unitdir}/timers.target.wants/rpm-ostree-countme.timer
-
-%files identity-enterprise
-%{_prefix}/lib/os-release.el
 %{_unitdir}/timers.target.wants/rpm-ostree-countme.timer
 
 %files ostree-desktop
