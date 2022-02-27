@@ -1,17 +1,31 @@
 include:
-  project: 'tauOS/ci'
-  file: '/.rpm-build-template.yml'
+  - project: 'tauOS/ci'
+    file: '/.rpm-build-template.yml'
+  - project: 'tauOS/ci'
+    file: '/.rpm-sign-template.yml'
+  - project: 'tauOS/ci'
+    file: '/.update-repo-template.yml'
+
+variables:
+    PACKAGE_VERSION: "1.0.0"
+    PACKAGE_NAME: "tau-release"
+    PACKAGE_ARCH: "noarch"
 
 stages:
-  - setup
   - build
+  - sign
+  - upload
 
 build-job:
   stage: build
   before_script:
     - sudo dnf install -y systemd-rpm-macros
-  variables:
-    PACKAGE_VERSION: "1.0.0"
-    PACKAGE_NAME: "tau-release"
-    PACKAGE_ARCH: "noarch"
   extends: .build
+
+sign-job:
+  stage: sign
+  extends: .sign
+
+upload-job:
+  stage: upload
+  extends: .upload
