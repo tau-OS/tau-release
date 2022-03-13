@@ -6,7 +6,7 @@
 Summary:        tauOS release files
 Name:           tau-release
 Version:        1.0.0
-Release:        1
+Release:        2
 License:        GPLv3
 URL:            https://tauos.co
 Source0:        %{name}-%{version}.tar.gz
@@ -63,7 +63,7 @@ Configuration package for rpm-ostree to add rpm-ostree polkit rules
 %setup -q
 %build
 
-%install	
+%install
 install -d %{buildroot}%{_prefix}/lib
 echo "tauOS release %{version} (%{release_name})" > %{buildroot}%{_prefix}/lib/tau-release
 # Symlink the -release files
@@ -134,6 +134,9 @@ sed -i -e "s|tauOS %{version}|tauOS Cimarrón %{version}|g" %{buildroot}%{_prefi
 # Override the list of enabled gnome-shell extensions
 install -Dm0644 80-tau.preset -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
 install -Dm0644 org.gnome.shell.gschema.override -t %{buildroot}%{_datadir}/glib-2.0/schemas/
+
+# Override certain Gnome settings
+install -Dm0644 org.gnome.desktop.gschema.override -t %{buildroot}%{_datadir}/glib-2.0/schemas/
 
 # Install rpm-ostree polkit rules
 install -Dm0644 org.projectatomic.rpmostree1.rules -t %{buildroot}%{_datadir}/polkit-1/rules.d/
