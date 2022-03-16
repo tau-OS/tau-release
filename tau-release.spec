@@ -1,6 +1,6 @@
 # Core
 %define release_name Prerelease
-%define dist_version 35
+%define dist_version 36
 %define codename Martin Perl
 
 Summary:        tauOS release files
