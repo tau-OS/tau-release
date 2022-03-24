@@ -1,12 +1,12 @@
 # Core
 %define release_name Prerelease
-%define dist_version 35
+%define dist_version 36
 %define codename Martin Perl
 
 Summary:        tauOS release files
 Name:           tau-release
-Version:        1.0.0
-Release:        2
+Version:        1.1
+Release:        0
 License:        GPLv3
 URL:            https://tauos.co
 Source0:        %{name}-%{version}.tar.gz
@@ -20,9 +20,9 @@ Conflicts:      generic-release
 
 Requires:       tau-release-identity
 Requires:       tau-release-ostree-desktop
-Obsoletes:      fedora-release-ostree-counting < 35-0.32
+Obsoletes:      fedora-release-ostree-counting <= 36-0.7
 
-# We could use the Third-party repos (https://src.fedoraproject.org/rpms/fedora-release/blob/f35/f/fedora-release.spec#_585)
+# We could use the Third-party repos (https://src.fedoraproject.org/rpms/fedora-release/blob/f36/f/fedora-release.spec#_589)
 
 %description
 tauOS release files such as various /etc/ files that define the release
