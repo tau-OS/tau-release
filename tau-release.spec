@@ -137,6 +137,7 @@ install -Dm0644 org.gnome.shell.gschema.override -t %{buildroot}%{_datadir}/glib
 
 # Override certain Gnome settings
 install -Dm0644 org.gnome.desktop.gschema.override -t %{buildroot}%{_datadir}/glib-2.0/schemas/
+install -Dm0644 org.gnome.mutter.gschema.override -t %{buildroot}%{_datadir}/glib-2.0/schemas/
 
 # Install rpm-ostree polkit rules
 install -Dm0644 org.projectatomic.rpmostree1.rules -t %{buildroot}%{_datadir}/polkit-1/rules.d/
