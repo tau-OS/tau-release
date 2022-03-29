@@ -17,4 +17,6 @@ jobs:
     with:
       extraBuildPackages: systemd-rpm-macros
   sign:
+    needs:
+      - build
     uses: tau-OS/github-actions/.github/workflows/sign-rpm.yml@main
