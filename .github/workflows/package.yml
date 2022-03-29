@@ -23,3 +23,11 @@ jobs:
       arch: "noarch"
     secrets:
       signingKey: ${{ secrets.GPG_PRIVATE_KEY }}
+  upload:
+    needs:
+      - sign
+    uses: tau-OS/github-actions/.github/workflows/upload-rpm.yml@main
+    with:
+      tauOSVersion: "1.1"
+    secrets:
+      privateKey: ${{ secrets.SSH_PRIVATE_KEY }}
