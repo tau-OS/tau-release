@@ -8,7 +8,7 @@ jobs:
   build:
     uses: tau-OS/github-actions/.github/workflows/build-rpm.yml@main
     with:
-      name: tau-release
+      name: "tau-release"
       version: "1.1"
-      arch: noarch
+      arch: "noarch"
       tauOSVersion: "1.1"
