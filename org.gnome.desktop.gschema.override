@@ -12,3 +12,6 @@ natural-scroll=false
 [org.gnome.desktop.wm.preferences]
 button-layout='appmenu:minimize,maximize,close'
 
+# GTK3 Theme
+[org.gnome.desktop.interface gtk-theme]
+adw-gtk3
