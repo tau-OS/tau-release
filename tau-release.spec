@@ -6,7 +6,7 @@
 Summary:        tauOS release files
 Name:           tau-release
 Version:        1.1
-Release:        0
+Release:        1
 License:        GPLv3
 URL:            https://tauos.co
 Source0:        %{name}-%{version}.tar.gz
@@ -211,6 +211,7 @@ install -Dm0644 99-default-disable.preset -t %{buildroot}%{_prefix}/lib/systemd/
 %files identity
 %{_datadir}/glib-2.0/schemas/org.gnome.shell.gschema.override
 %{_datadir}/glib-2.0/schemas/org.gnome.desktop.gschema.override
+%{_datadir}/glib-2.0/schemas/org.gnome.mutter.gschema.override
 %{_unitdir}/timers.target.wants/rpm-ostree-countme.timer
 
 %files identity-kde
