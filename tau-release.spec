@@ -135,6 +135,14 @@ sed -i -e "s|tauOS %{version}|tauOS Cimarrón %{version}|g" %{buildroot}%{_prefi
 install -Dm0644 80-tau.preset -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
 install -Dm0644 org.gnome.shell.gschema.override -t %{buildroot}%{_datadir}/glib-2.0/schemas/
 
+# Install GNOME Wallpapers (being done here in case we do custom version wallpapers and need variables and shit)
+/bin/echo '[org.gnome.desktop.background]' > \
+    org.gnome.desktop.gschema.override
+/bin/echo "picture-uri='file://%{_datadir}/backgrounds/tauos/default/tau.png'" >> \
+    org.gnome.desktop.gschema.override
+/bin/echo "picture-uri-dark='file://%{_datadir}/backgrounds/tauos/default/tau.png'" >> \
+    org.gnome.desktop.gschema.override
+
 # Override certain Gnome settings
 install -Dm0644 org.gnome.desktop.gschema.override -t %{buildroot}%{_datadir}/glib-2.0/schemas/
 install -Dm0644 org.gnome.mutter.gschema.override -t %{buildroot}%{_datadir}/glib-2.0/schemas/
