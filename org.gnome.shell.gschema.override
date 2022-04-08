@@ -1,2 +1,2 @@
-# [org.gnome.shell]
-# enabled-extensions=['background-logo@fedorahosted.org']
+[org.gnome.shell]
+enabled-extensions=['appindicatorsupport@rgcjonas.gmail.com']
