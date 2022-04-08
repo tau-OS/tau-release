@@ -6,7 +6,7 @@
 Summary:        tauOS release files
 Name:           tau-release
 Version:        1.1
-Release:        1
+Release:        1.1
 License:        GPLv3
 URL:            https://tauos.co
 Source0:        %{name}-%{version}.tar.gz
@@ -174,7 +174,6 @@ EOF
 mkdir -p licenses
 install -pm 0644 LICENSE licenses/LICENSE
 
-
 # Default system wide
 install -Dm0644 85-display-manager.preset -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
 install -Dm0644 90-default.preset -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
@@ -182,6 +181,10 @@ install -Dm0644 90-default-user.preset -t %{buildroot}%{_prefix}/lib/systemd/use
 # The same file is installed in two places with identical contents
 install -Dm0644 99-default-disable.preset -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
 install -Dm0644 99-default-disable.preset -t %{buildroot}%{_prefix}/lib/systemd/user-preset/
+
+# Install the GTK CSS
+mkdir -p %{buildroot}%{_sysconfdir}/skel/.config/gtk-4.0
+install -Dm0644 gtk.css %{buildroot}%{_sysconfdir}/skel/.config/gtk-4.0/
 
 
 %files
@@ -193,6 +196,7 @@ install -Dm0644 99-default-disable.preset -t %{buildroot}%{_prefix}/lib/systemd/
 %{_sysconfdir}/fedora-release
 %{_sysconfdir}/redhat-release
 %{_sysconfdir}/system-release
+%{_sysconfdir}/skel/.config/gtk-4.0/gtk.css
 %attr(0644,root,root) %{_prefix}/lib/issue
 %config(noreplace) %{_sysconfdir}/issue
 %attr(0644,root,root) %{_prefix}/lib/issue.net
