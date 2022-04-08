@@ -13,9 +13,9 @@ Source0:        %{name}-%{version}.tar.gz
 BuildArch:      noarch
 Provides:       fedora-release = %{dist_version}-%{release}
 Provides:       fedora-release-variant = %{dist_version}-%{release}
-Provides:       system-release = %{dist_version}-%{release}
-Provides:       system-release(%{dist_version}) = %{dist_version}-%{release}
-Provides:       base-module(platform:f%{dist_version}) = %{dist_version}-%{release}
+Provides:       system-release = %{dist_version}
+Provides:       system-release(%{dist_version}) = %{dist_version}
+Provides:       base-module(platform:f%{dist_version}) = %{dist_version}
 Conflicts:      generic-release
 
 Requires:       tau-release-identity
