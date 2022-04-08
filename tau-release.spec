@@ -185,7 +185,8 @@ install -Dm0644 99-default-disable.preset -t %{buildroot}%{_prefix}/lib/systemd/
 # Install the GTK CSS
 mkdir -p %{buildroot}%{_sysconfdir}/skel/.config/gtk-4.0
 install -Dm0644 gtk.css -t %{buildroot}%{_sysconfdir}/skel/.config/gtk-4.0/
-
+mkdir -p %{buildroot}/var/flatpak/overrides
+install -Dm0644 flatpak-global -T %{buildroot}/var/flatpak/overrides/global
 
 %files
 %license licenses/LICENSE
@@ -211,6 +212,7 @@ install -Dm0644 gtk.css -t %{buildroot}%{_sysconfdir}/skel/.config/gtk-4.0/
 %{_prefix}/lib/systemd/system-preset/85-display-manager.preset
 %{_prefix}/lib/systemd/system-preset/90-default.preset
 %{_prefix}/lib/systemd/system-preset/99-default-disable.preset
+/var/flatpak/overrides/global
 
 %files identity
 %{_datadir}/glib-2.0/schemas/org.gnome.shell.gschema.override
