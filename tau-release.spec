@@ -178,8 +178,6 @@ install -pm 0644 LICENSE licenses/LICENSE
 install -Dm0644 85-display-manager.preset -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
 install -Dm0644 90-default.preset -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
 install -Dm0644 90-default-user.preset -t %{buildroot}%{_prefix}/lib/systemd/user-preset/
-mkdir -p %{buildroot}%{_sysconfdir}/dconf/db/local.d
-install -Dm0644 00-hidpi -t %{buildroot}%{_sysconfdir}/dconf/db/local.d/
 # The same file is installed in two places with identical contents
 install -Dm0644 99-default-disable.preset -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
 install -Dm0644 99-default-disable.preset -t %{buildroot}%{_prefix}/lib/systemd/user-preset/
@@ -199,7 +197,6 @@ install -Dm0644 gtk.css -t %{buildroot}%{_sysconfdir}/skel/.config/gtk-4.0/
 %{_sysconfdir}/redhat-release
 %{_sysconfdir}/system-release
 %{_sysconfdir}/skel/.config/gtk-4.0/gtk.css
-%{_sysconfdir}/dconf/db/local.d/00-hidpi
 %attr(0644,root,root) %{_prefix}/lib/issue
 %config(noreplace) %{_sysconfdir}/issue
 %attr(0644,root,root) %{_prefix}/lib/issue.net
