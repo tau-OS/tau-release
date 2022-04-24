@@ -9,8 +9,29 @@ Version:        1.1
 Release:        1.2
 License:        GPLv3
 URL:            https://tauos.co
-Source0:        %{name}-%{version}.tar.gz
-BuildRequires: systemd-rpm-macros
+
+Source0:        README.md
+Source1:        LICENSE
+
+# Styles
+Source2:        gtk.css
+Source3:        flatpak-global
+
+# Overrides
+Source11:       org.gnome.desktop.gschema.override
+Source12:       org.gnome.mutter.gschema.override
+Source13:       org.gnome.shell.gschema.override
+Source14:       org.projectatomic.rpmostree1.rules
+
+# Presets
+Source21:       80-tau.preset
+Source22:       85-display-manager.preset
+Source23:       90-default-user.preset
+Source24:       90-default.preset
+Source25:       99-default-disable.preset
+
+BuildRequires:  systemd-rpm-macros
+
 BuildArch:      noarch
 Provides:       fedora-release = %{dist_version}-%{release}
 Provides:       fedora-release-variant = %{dist_version}-%{release}
@@ -36,23 +57,23 @@ Conflicts:      fedora-release-identity
 %description identity
 Provides the necessary files for a tauOS installation
 
-%package identity-kde
-Summary:        Package providing the identity for tauOS Dragon
-RemovePathPostfixes: .kde
-Provides:       fedora-release-identity = %{dist_version}-%{release}
-Conflicts:      fedora-release-identity
+# %package identity-kde
+# Summary:        Package providing the identity for tauOS Dragon
+# RemovePathPostfixes: .kde
+# Provides:       fedora-release-identity = %{dist_version}-%{release}
+# Conflicts:      fedora-release-identity
 
-%description identity-kde
-Provides the necessary files for tauOS KDE Dragon
+# %description identity-kde
+# Provides the necessary files for tauOS KDE Dragon
 
-%package identity-mate
-Summary:        Package providing the identity for tauOS Cimarrón
-RemovePathPostfixes: .mate
-Provides:       fedora-release-identity = %{dist_version}-%{release}
-Conflicts:      fedora-release-identity
+# %package identity-mate
+# Summary:        Package providing the identity for tauOS Cimarrón
+# RemovePathPostfixes: .mate
+# Provides:       fedora-release-identity = %{dist_version}-%{release}
+# Conflicts:      fedora-release-identity
 
-%description identity-mate
-Provides the necessary files for tauOS Cimarrón
+# %description identity-mate
+# Provides the necessary files for tauOS Cimarrón
 
 %package ostree-desktop
 Summary:        Configuration package for rpm-ostree to add rpm-ostree polkit rules
@@ -61,7 +82,7 @@ Summary:        Configuration package for rpm-ostree to add rpm-ostree polkit ru
 Configuration package for rpm-ostree to add rpm-ostree polkit rules
 
 %prep
-%setup -q
+
 %build
 
 %install
@@ -116,40 +137,40 @@ cp -p os-release %{buildroot}%{_prefix}/lib/os-release
 
 # Modify os-release for different editions
 
-# KDE
-cp -p os-release \
-      %{buildroot}%{_prefix}/lib/os-release.kde
-echo "VARIANT=\"Dragon\"" >> %{buildroot}%{_prefix}/lib/os-release.kde
-echo "VARIANT_ID=kde" >> %{buildroot}%{_prefix}/lib/os-release.kde
-sed -i -e "s|tauOS %{version}|tauOS Dragon %{version}|g" %{buildroot}%{_prefix}/lib/os-release.kde
+# # KDE
+# cp -p os-release \
+#       %{buildroot}%{_prefix}/lib/os-release.kde
+# echo "VARIANT=\"Dragon\"" >> %{buildroot}%{_prefix}/lib/os-release.kde
+# echo "VARIANT_ID=kde" >> %{buildroot}%{_prefix}/lib/os-release.kde
+# sed -i -e "s|tauOS %{version}|tauOS Dragon %{version}|g" %{buildroot}%{_prefix}/lib/os-release.kde
 
-# MATE
-cp -p os-release \
-      %{buildroot}%{_prefix}/lib/os-release.mate
-echo "VARIANT=\"Cimarrón\"" >> %{buildroot}%{_prefix}/lib/os-release.mate
-echo "VARIANT_ID=mate" >> %{buildroot}%{_prefix}/lib/os-release.mate
-sed -i -e "s|tauOS %{version}|tauOS Cimarrón %{version}|g" %{buildroot}%{_prefix}/lib/os-release.mate
+# # MATE
+# cp -p os-release \
+#       %{buildroot}%{_prefix}/lib/os-release.mate
+# echo "VARIANT=\"Cimarrón\"" >> %{buildroot}%{_prefix}/lib/os-release.mate
+# echo "VARIANT_ID=mate" >> %{buildroot}%{_prefix}/lib/os-release.mate
+# sed -i -e "s|tauOS %{version}|tauOS Cimarrón %{version}|g" %{buildroot}%{_prefix}/lib/os-release.mate
 
 # TODO you could use a custom codename but idc
 
 # Override the list of enabled gnome-shell extensions
-install -Dm0644 80-tau.preset -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
-install -Dm0644 org.gnome.shell.gschema.override -t %{buildroot}%{_datadir}/glib-2.0/schemas/
+install -Dm0644 %SOURCE21 -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
+install -Dm0644 %SOURCE13 -t %{buildroot}%{_datadir}/glib-2.0/schemas/
 
 # Install GNOME Wallpapers (being done here in case we do custom version wallpapers and need variables and shit)
 /bin/echo '[org.gnome.desktop.background]' > \
-    org.gnome.desktop.gschema.override
+    %SOURCE11
 /bin/echo "picture-uri='file://%{_datadir}/backgrounds/tauos/default/tau.png'" >> \
-    org.gnome.desktop.gschema.override
+    %SOURCE11
 /bin/echo "picture-uri-dark='file://%{_datadir}/backgrounds/tauos/default/tau.png'" >> \
-    org.gnome.desktop.gschema.override
+    %SOURCE11
 
 # Override certain Gnome settings
-install -Dm0644 org.gnome.desktop.gschema.override -t %{buildroot}%{_datadir}/glib-2.0/schemas/
-install -Dm0644 org.gnome.mutter.gschema.override -t %{buildroot}%{_datadir}/glib-2.0/schemas/
+install -Dm0644 %SOURCE11 -t %{buildroot}%{_datadir}/glib-2.0/schemas/
+install -Dm0644 %SOURCE12 -t %{buildroot}%{_datadir}/glib-2.0/schemas/
 
 # Install rpm-ostree polkit rules
-install -Dm0644 org.projectatomic.rpmostree1.rules -t %{buildroot}%{_datadir}/polkit-1/rules.d/
+install -Dm0644 %SOURCE14 -t %{buildroot}%{_datadir}/polkit-1/rules.d/
 
 # Statically enable rpm-ostree-countme timer
 install -dm0755 %{buildroot}%{_unitdir}/timers.target.wants/
@@ -171,25 +192,28 @@ cat >> %{buildroot}%{_rpmconfigdir}/macros.d/macros.dist << EOF
 EOF
 
 
-# Install licenses
+# Install licenses and documentation
 mkdir -p licenses
-install -pm 0644 LICENSE licenses/LICENSE
+install -pm 0644 %SOURCE1 licenses/LICENSE
+
+install -pm 0644 %SOURCE0 README.md
 
 # Default system wide
-install -Dm0644 85-display-manager.preset -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
-install -Dm0644 90-default.preset -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
-install -Dm0644 90-default-user.preset -t %{buildroot}%{_prefix}/lib/systemd/user-preset/
+install -Dm0644 %SOURCE22 -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
+install -Dm0644 %SOURCE24 -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
+install -Dm0644 %SOURCE23 -t %{buildroot}%{_prefix}/lib/systemd/user-preset/
 # The same file is installed in two places with identical contents
-install -Dm0644 99-default-disable.preset -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
-install -Dm0644 99-default-disable.preset -t %{buildroot}%{_prefix}/lib/systemd/user-preset/
+install -Dm0644 %SOURCE25 -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
+install -Dm0644 %SOURCE25 -t %{buildroot}%{_prefix}/lib/systemd/user-preset/
 
-# Install the GTK CSS
+# Install the GTK CSS and Flatpak Adjustments
 mkdir -p %{buildroot}%{_sysconfdir}/skel/.config/gtk-4.0
-install -Dm0644 gtk.css -t %{buildroot}%{_sysconfdir}/skel/.config/gtk-4.0/
+install -Dm0644 %SOURCE2 -t %{buildroot}%{_sysconfdir}/skel/.config/gtk-4.0/
 mkdir -p %{buildroot}/var/flatpak/overrides
-install -Dm0644 flatpak-global -T %{buildroot}/var/lib/flatpak/overrides/global
+install -Dm0644 %SOURCE3 -T %{buildroot}/var/lib/flatpak/overrides/global
 
 %files
+%doc README.md
 %license licenses/LICENSE
 %{_prefix}/lib/os-release
 %{_prefix}/lib/tau-release
@@ -221,16 +245,23 @@ install -Dm0644 flatpak-global -T %{buildroot}/var/lib/flatpak/overrides/global
 %{_datadir}/glib-2.0/schemas/org.gnome.mutter.gschema.override
 %{_unitdir}/timers.target.wants/rpm-ostree-countme.timer
 
-%files identity-kde
-%{_prefix}/lib/os-release.kde
-%{_unitdir}/timers.target.wants/rpm-ostree-countme.timer
+# %files identity-kde
+# %{_prefix}/lib/os-release.kde
+# %{_unitdir}/timers.target.wants/rpm-ostree-countme.timer
 
-%files identity-mate
-%{_prefix}/lib/os-release.mate
-%{_unitdir}/timers.target.wants/rpm-ostree-countme.timer
+# %files identity-mate
+# %{_prefix}/lib/os-release.mate
+# %{_unitdir}/timers.target.wants/rpm-ostree-countme.timer
 
 %files ostree-desktop
 %attr(0644,root,root) %{_prefix}/share/polkit-1/rules.d/org.projectatomic.rpmostree1.rules
 
 %changelog
-%autochangelog
+* Sat Apr 23 2022 Jamie Murphy <jamie@fyralabs.com> - 1.1-1.2
+- Update keybindings
+
+* Wed Mar 23 2022 Jamie Lee <jamie@innatical.com> - 1.1-0
+- Update for Fedora 36
+
+* Tue Aug 10 2021 Tomas Hrcka <thrcka@redhat.com> - 35-0.16
+- F35 branched form rawhide
