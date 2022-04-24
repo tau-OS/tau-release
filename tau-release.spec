@@ -10,6 +10,7 @@ Release:        1.2
 License:        GPLv3
 URL:            https://tauos.co
 Source0:        %{name}-%{version}.tar.gz
+BuildRequires: systemd-rpm-macros
 BuildArch:      noarch
 Provides:       fedora-release = %{dist_version}-%{release}
 Provides:       fedora-release-variant = %{dist_version}-%{release}
