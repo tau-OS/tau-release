@@ -1,6 +1,7 @@
 # Show Battery Percentage
 [org.gnome.desktop.interface]
 show-battery-percentage=true
+icon-theme='Hydrogen'
 
 # Natural Scrolling
 [org.gnome.desktop.peripherals.mouse]
