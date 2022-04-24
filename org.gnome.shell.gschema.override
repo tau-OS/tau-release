@@ -1,2 +1,5 @@
 [org.gnome.shell]
 enabled-extensions=['appindicatorsupport@rgcjonas.gmail.com']
+
+[org.gnome.shell.keybindings]
+show-screenshot-ui=['<Super>bracketright']
