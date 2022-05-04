@@ -1,6 +1,7 @@
 # Show Battery Percentage
 [org.gnome.desktop.interface]
 show-battery-percentage=true
+icon-theme='Hydrogen'
 
 # Natural Scrolling
 [org.gnome.desktop.peripherals.mouse]
@@ -10,7 +11,7 @@ natural-scroll=false
 
 # Button Layout
 [org.gnome.desktop.wm.preferences]
-button-layout='appmenu:minimize,maximize,close'
+button-layout=':maximize,close,appmenu'
 
 # GTK3 Theme
 [org.gnome.desktop.interface]

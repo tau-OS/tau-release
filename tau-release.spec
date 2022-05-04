@@ -6,7 +6,7 @@
 Summary:        tauOS release files
 Name:           tau-release
 Version:        1.1
-Release:        1.2
+Release:        1.4
 License:        GPLv3
 URL:            https://tauos.co
 
@@ -257,6 +257,12 @@ install -Dm0644 %SOURCE3 -T %{buildroot}/var/lib/flatpak/overrides/global
 %attr(0644,root,root) %{_prefix}/share/polkit-1/rules.d/org.projectatomic.rpmostree1.rules
 
 %changelog
+* Thu Apr 28 2022 Lains <lainsce@airmail.cc> - 1.1-1.4
+- Update window control override to reflect new design
+
+* Sat Apr 23 2022 Jamie Murphy <jamie@fyralabs.com> - 1.1-1.3
+- Add Hydrogen icon theme
+
 * Sat Apr 23 2022 Jamie Murphy <jamie@fyralabs.com> - 1.1-1.2
 - Update keybindings
 
