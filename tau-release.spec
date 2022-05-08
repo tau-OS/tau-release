@@ -6,7 +6,7 @@
 Summary:        tauOS release files
 Name:           tau-release
 Version:        1.1
-Release:        1.4
+Release:        1.5
 License:        GPLv3
 URL:            https://tauos.co
 
@@ -56,24 +56,6 @@ Provides:       tau-release-identity-gnome  = %{dist_version}-%{release}
 Conflicts:      fedora-release-identity
 %description identity
 Provides the necessary files for a tauOS installation
-
-# %package identity-kde
-# Summary:        Package providing the identity for tauOS Dragon
-# RemovePathPostfixes: .kde
-# Provides:       fedora-release-identity = %{dist_version}-%{release}
-# Conflicts:      fedora-release-identity
-
-# %description identity-kde
-# Provides the necessary files for tauOS KDE Dragon
-
-# %package identity-mate
-# Summary:        Package providing the identity for tauOS Cimarrón
-# RemovePathPostfixes: .mate
-# Provides:       fedora-release-identity = %{dist_version}-%{release}
-# Conflicts:      fedora-release-identity
-
-# %description identity-mate
-# Provides the necessary files for tauOS Cimarrón
 
 %package ostree-desktop
 Summary:        Configuration package for rpm-ostree to add rpm-ostree polkit rules
@@ -134,24 +116,6 @@ ln -s ../usr/lib/issue.net %{buildroot}%{_sysconfdir}/issue.net
 mkdir -p %{buildroot}%{_sysconfdir}/issue.d
 
 cp -p os-release %{buildroot}%{_prefix}/lib/os-release
-
-# Modify os-release for different editions
-
-# # KDE
-# cp -p os-release \
-#       %{buildroot}%{_prefix}/lib/os-release.kde
-# echo "VARIANT=\"Dragon\"" >> %{buildroot}%{_prefix}/lib/os-release.kde
-# echo "VARIANT_ID=kde" >> %{buildroot}%{_prefix}/lib/os-release.kde
-# sed -i -e "s|tauOS %{version}|tauOS Dragon %{version}|g" %{buildroot}%{_prefix}/lib/os-release.kde
-
-# # MATE
-# cp -p os-release \
-#       %{buildroot}%{_prefix}/lib/os-release.mate
-# echo "VARIANT=\"Cimarrón\"" >> %{buildroot}%{_prefix}/lib/os-release.mate
-# echo "VARIANT_ID=mate" >> %{buildroot}%{_prefix}/lib/os-release.mate
-# sed -i -e "s|tauOS %{version}|tauOS Cimarrón %{version}|g" %{buildroot}%{_prefix}/lib/os-release.mate
-
-# TODO you could use a custom codename but idc
 
 # Override the list of enabled gnome-shell extensions
 install -Dm0644 %SOURCE21 -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
@@ -245,18 +209,13 @@ install -Dm0644 %SOURCE3 -T %{buildroot}/var/lib/flatpak/overrides/global
 %{_datadir}/glib-2.0/schemas/org.gnome.mutter.gschema.override
 %{_unitdir}/timers.target.wants/rpm-ostree-countme.timer
 
-# %files identity-kde
-# %{_prefix}/lib/os-release.kde
-# %{_unitdir}/timers.target.wants/rpm-ostree-countme.timer
-
-# %files identity-mate
-# %{_prefix}/lib/os-release.mate
-# %{_unitdir}/timers.target.wants/rpm-ostree-countme.timer
-
 %files ostree-desktop
 %attr(0644,root,root) %{_prefix}/share/polkit-1/rules.d/org.projectatomic.rpmostree1.rules
 
 %changelog
+* Sat May 7 2022 Jamie Murphy <jamie@fyralabs.com> - 1.1-1.5
+- Change fonts
+
 * Thu Apr 28 2022 Lains <lainsce@airmail.cc> - 1.1-1.4
 - Update window control override to reflect new design
 

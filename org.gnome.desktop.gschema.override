@@ -12,7 +12,11 @@ natural-scroll=false
 # Button Layout
 [org.gnome.desktop.wm.preferences]
 button-layout=':maximize,close,appmenu'
+titlebar-font='Satoshi Bold 11'
 
 # GTK3 Theme
 [org.gnome.desktop.interface]
 gtk-theme='adw-gtk3'
+# Font
+font-name='Satoshi 11'
+document-font-name='Satoshi 11'
