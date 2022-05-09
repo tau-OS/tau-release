@@ -1,5 +1,5 @@
 [org.gnome.shell]
-enabled-extensions=['appindicatorsupport@rgcjonas.gmail.com','top-bar@tauos.co']
+enabled-extensions=['appindicatorsupport@rgcjonas.gmail.com','top-bar@tauos.co', 'user-theme@gnome-shell-extensions.gcampax.github.com']
 
 [org.gnome.shell.keybindings]
 show-screenshot-ui=['<Super>bracketright']

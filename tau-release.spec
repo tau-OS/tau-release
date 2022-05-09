@@ -6,7 +6,7 @@
 Summary:        tauOS release files
 Name:           tau-release
 Version:        1.1
-Release:        1.5
+Release:        1.6
 License:        GPLv3
 URL:            https://tauos.co
 
@@ -213,6 +213,9 @@ install -Dm0644 %SOURCE3 -T %{buildroot}/var/lib/flatpak/overrides/global
 %attr(0644,root,root) %{_prefix}/share/polkit-1/rules.d/org.projectatomic.rpmostree1.rules
 
 %changelog
+* Mon May 9 2022 Jamie Murphy <jamie@fyralabs.com> - 1.1-1.6
+- Add user-themes to extensions
+
 * Sat May 7 2022 Jamie Murphy <jamie@fyralabs.com> - 1.1-1.5
 - Change fonts
 
