@@ -18,5 +18,5 @@ titlebar-font='Manrope Bold 10'
 [org.gnome.desktop.interface]
 gtk-theme='Helium'
 # Font
-font-name='Manrope 11'
-document-font-name='Manrope 11'
+font-name='Manrope 10'
+document-font-name='Manrope 10'
