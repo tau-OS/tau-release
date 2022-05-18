@@ -239,7 +239,7 @@ enable pluto.socket
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=1367932
 # Automatically refresh installed snaps
-enable snapd.refresh.timer
+# enable snapd.refresh.timer
 # Socket activated daemon to manage snaps
 enable snapd.socket
 
