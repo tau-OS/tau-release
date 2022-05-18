@@ -6,7 +6,7 @@
 Summary:        tauOS release files
 Name:           tau-release
 Version:        1.1
-Release:        1.6
+Release:        1.7
 License:        GPLv3
 URL:            https://tauos.co
 
@@ -40,28 +40,28 @@ Provides:       system-release(%{dist_version}) = %{dist_version}
 Provides:       base-module(platform:f%{dist_version}) = %{dist_version}
 Conflicts:      generic-release
 
-Requires:       tau-release-identity
-Requires:       tau-release-ostree-desktop
 Obsoletes:      fedora-release-ostree-counting <= 36-0.7
 
 # We could use the Third-party repos (https://src.fedoraproject.org/rpms/fedora-release/blob/f36/f/fedora-release.spec#_589)
 
 %description
-tauOS release files such as various /etc/ files that define the release
+Generic files and overrides for all tauOS variants
 
-%package identity
-Summary:        Package providing the identity for tauOS
+%package desktop
+Summary:        tauOS Release Files
 Provides:       fedora-release-identity = %{dist_version}-%{release}
 Provides:       tau-release-identity-gnome  = %{dist_version}-%{release}
+Provides:       tau-release-identity  = %{dist_version}-%{release}
 Conflicts:      fedora-release-identity
-%description identity
-Provides the necessary files for a tauOS installation
 
-%package ostree-desktop
-Summary:        Configuration package for rpm-ostree to add rpm-ostree polkit rules
+%description desktop
+Generic files and overrides for Desktop-specific tauOS Variants
 
-%description ostree-desktop
-Configuration package for rpm-ostree to add rpm-ostree polkit rules
+%package server
+Summary:        tauOS Release Files
+
+%description server
+Generic files and overrides for Server-specific tauOS Variants
 
 %prep
 
@@ -176,6 +176,10 @@ install -Dm0644 %SOURCE2 -t %{buildroot}%{_sysconfdir}/skel/.config/gtk-4.0/
 mkdir -p %{buildroot}/var/flatpak/overrides
 install -Dm0644 %SOURCE3 -T %{buildroot}/var/lib/flatpak/overrides/global
 
+# Ghost file IG
+touch SERVER.md
+echo "Placeholder - to be replaced" > SERVER.md
+
 %files
 %doc README.md
 %license licenses/LICENSE
@@ -186,7 +190,6 @@ install -Dm0644 %SOURCE3 -T %{buildroot}/var/lib/flatpak/overrides/global
 %{_sysconfdir}/fedora-release
 %{_sysconfdir}/redhat-release
 %{_sysconfdir}/system-release
-%{_sysconfdir}/skel/.config/gtk-4.0/gtk.css
 %attr(0644,root,root) %{_prefix}/lib/issue
 %config(noreplace) %{_sysconfdir}/issue
 %attr(0644,root,root) %{_prefix}/lib/issue.net
@@ -201,18 +204,23 @@ install -Dm0644 %SOURCE3 -T %{buildroot}/var/lib/flatpak/overrides/global
 %{_prefix}/lib/systemd/system-preset/85-display-manager.preset
 %{_prefix}/lib/systemd/system-preset/90-default.preset
 %{_prefix}/lib/systemd/system-preset/99-default-disable.preset
-/var/lib/flatpak/overrides/global
+%{_unitdir}/timers.target.wants/rpm-ostree-countme.timer
+%attr(0644,root,root) %{_prefix}/share/polkit-1/rules.d/org.projectatomic.rpmostree1.rules
 
-%files identity
+%files desktop
 %{_datadir}/glib-2.0/schemas/org.gnome.shell.gschema.override
 %{_datadir}/glib-2.0/schemas/org.gnome.desktop.gschema.override
 %{_datadir}/glib-2.0/schemas/org.gnome.mutter.gschema.override
-%{_unitdir}/timers.target.wants/rpm-ostree-countme.timer
+%{_sysconfdir}/skel/.config/gtk-4.0/gtk.css
+/var/lib/flatpak/overrides/global
 
-%files ostree-desktop
-%attr(0644,root,root) %{_prefix}/share/polkit-1/rules.d/org.projectatomic.rpmostree1.rules
+%files server
+%doc SERVER.md
 
 %changelog
+* Wed May 18 2022 Jamie Murphy <jamie@fyralabs.com> - 1.1-1.7
+- Completely reorganise packages
+
 * Mon May 9 2022 Jamie Murphy <jamie@fyralabs.com> - 1.1-1.6
 - Add user-themes to extensions
 
