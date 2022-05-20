@@ -1,0 +1,6 @@
+[org/gnome/desktop/interface]
+icon-theme='Hydrogen'
+cursor-theme='Hydrogen'
+gtk-theme='Helium-dark'
+font-name='Manrope 10'
+show-battery-percentage=true
