@@ -6,7 +6,7 @@
 Summary:        tauOS release files
 Name:           tau-release
 Version:        1.1
-Release:        1.7
+Release:        1.8
 License:        GPLv3
 URL:            https://tauos.co
 
@@ -29,6 +29,9 @@ Source22:       85-display-manager.preset
 Source23:       90-default-user.preset
 Source24:       90-default.preset
 Source25:       99-default-disable.preset
+
+# GDM
+Source26:       00-gdm-settings
 
 BuildRequires:  systemd-rpm-macros
 
@@ -170,6 +173,9 @@ install -Dm0644 %SOURCE23 -t %{buildroot}%{_prefix}/lib/systemd/user-preset/
 install -Dm0644 %SOURCE25 -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
 install -Dm0644 %SOURCE25 -t %{buildroot}%{_prefix}/lib/systemd/user-preset/
 
+# Install GDM settings
+install -Dm0644 %SOURCE26 -t /etc/dconf/db/gdm.d/
+
 # Install the GTK CSS and Flatpak Adjustments
 mkdir -p %{buildroot}%{_sysconfdir}/skel/.config/gtk-4.0
 install -Dm0644 %SOURCE2 -t %{buildroot}%{_sysconfdir}/skel/.config/gtk-4.0/
@@ -206,6 +212,7 @@ echo "Placeholder - to be replaced" > SERVER.md
 %{_prefix}/lib/systemd/system-preset/99-default-disable.preset
 %{_unitdir}/timers.target.wants/rpm-ostree-countme.timer
 %attr(0644,root,root) %{_prefix}/share/polkit-1/rules.d/org.projectatomic.rpmostree1.rules
+/etc/dconf/db/gdm.d/00-gdm-settings
 
 %files desktop
 %{_datadir}/glib-2.0/schemas/org.gnome.shell.gschema.override
