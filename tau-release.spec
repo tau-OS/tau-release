@@ -212,7 +212,7 @@ echo "Placeholder - to be replaced" > SERVER.md
 %{_prefix}/lib/systemd/system-preset/99-default-disable.preset
 %{_unitdir}/timers.target.wants/rpm-ostree-countme.timer
 %attr(0644,root,root) %{_prefix}/share/polkit-1/rules.d/org.projectatomic.rpmostree1.rules
-/00-gdm-settings
+%{_sysconfdir}/dconf/db/gdm.d/00-gdm-settings
 
 %files desktop
 %{_datadir}/glib-2.0/schemas/org.gnome.shell.gschema.override
