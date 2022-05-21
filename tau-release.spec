@@ -174,7 +174,7 @@ install -Dm0644 %SOURCE25 -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
 install -Dm0644 %SOURCE25 -t %{buildroot}%{_prefix}/lib/systemd/user-preset/
 
 # Install GDM settings
-install -Dm0644 %SOURCE26 -t /etc/dconf/db/gdm.d/
+install -Dm0644 %SOURCE26 -t %{buildroot}%{_sysconfdir}/dconf/db/gdm.d/
 
 # Install the GTK CSS and Flatpak Adjustments
 mkdir -p %{buildroot}%{_sysconfdir}/skel/.config/gtk-4.0
