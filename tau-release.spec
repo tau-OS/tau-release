@@ -179,8 +179,8 @@ install -Dm0644 %SOURCE26 -t %{buildroot}%{_sysconfdir}/dconf/db/gdm.d/
 # Install the GTK CSS and Flatpak Adjustments
 mkdir -p %{buildroot}%{_sysconfdir}/skel/.config/gtk-4.0
 install -Dm0644 %SOURCE2 -t %{buildroot}%{_sysconfdir}/skel/.config/gtk-4.0/
-mkdir -p %{buildroot}/var/flatpak/overrides
-install -Dm0644 %SOURCE3 -T %{buildroot}/var/lib/flatpak/overrides/global
+mkdir -p %{buildroot}%{_sharedstatedir}/flatpak/overrides
+install -Dm0644 %SOURCE3 -T %{buildroot}%{_sharedstatedir}/flatpak/overrides/global
 
 # Ghost file IG
 touch SERVER.md
@@ -219,7 +219,7 @@ echo "Placeholder - to be replaced" > SERVER.md
 %{_datadir}/glib-2.0/schemas/org.gnome.desktop.gschema.override
 %{_datadir}/glib-2.0/schemas/org.gnome.mutter.gschema.override
 %{_sysconfdir}/skel/.config/gtk-4.0/gtk.css
-/var/lib/flatpak/overrides/global
+%{_sharedstatedir}/flatpak/overrides/global
 
 %files server
 %doc SERVER.md
