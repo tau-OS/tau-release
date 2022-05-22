@@ -6,7 +6,7 @@
 Summary:        tauOS release files
 Name:           tau-release
 Version:        1.1
-Release:        1.9
+Release:        1.10
 License:        GPLv3
 URL:            https://tauos.co
 
@@ -231,6 +231,9 @@ echo "Placeholder - to be replaced" > SERVER.md
 %doc SERVER.md
 
 %changelog
+* Sat May 21 2022 Jamie Murphy <jamie@fyralabs.com> - 1.1-1.10
+- Fix Flatpaks again
+
 * Wed May 18 2022 Jamie Murphy <jamie@fyralabs.com> - 1.1-1.7
 - Completely reorganise packages
 
