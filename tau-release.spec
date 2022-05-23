@@ -6,7 +6,7 @@
 Summary:        tauOS release files
 Name:           tau-release
 Version:        1.1
-Release:        1.10
+Release:        1.11
 License:        GPLv3
 URL:            https://tauos.co
 
@@ -50,8 +50,16 @@ Obsoletes:      fedora-release-ostree-counting <= 36-0.7
 %description
 Generic files and overrides for all tauOS variants
 
+%package core
+Summary:        tauOS Release Files
+RemovePathPostfixes: .core
+
+%description core
+Generic files and overrides for Core-specific tauOS Variants
+
 %package desktop
 Summary:        tauOS Release Files
+RemovePathPostfixes: .desktop
 Provides:       fedora-release-identity = %{dist_version}-%{release}
 Provides:       tau-release-identity-gnome  = %{dist_version}-%{release}
 Provides:       tau-release-identity  = %{dist_version}-%{release}
@@ -62,6 +70,7 @@ Generic files and overrides for Desktop-specific tauOS Variants
 
 %package server
 Summary:        tauOS Release Files
+RemovePathPostfixes: .server
 
 %description server
 Generic files and overrides for Server-specific tauOS Variants
@@ -119,6 +128,18 @@ ln -s ../usr/lib/issue.net %{buildroot}%{_sysconfdir}/issue.net
 mkdir -p %{buildroot}%{_sysconfdir}/issue.d
 
 cp -p os-release %{buildroot}%{_prefix}/lib/os-release
+
+# Modify os-release for different variants
+cp -p os-release %{buildroot}%{_prefix}/lib/os-release.core
+echo "VARIANT=\"Core\"" >> %{buildroot}%{_prefix}/lib/os-release.core
+echo "VARIANT_ID=core" >> %{buildroot}%{_prefix}/lib/os-release.core
+cp -p os-release %{buildroot}%{_prefix}/lib/os-release.desktop
+echo "VARIANT=\"Desktop\"" >> %{buildroot}%{_prefix}/lib/os-release.desktop
+echo "VARIANT_ID=desktop" >> %{buildroot}%{_prefix}/lib/os-release.desktop
+cp -p os-release %{buildroot}%{_prefix}/lib/os-release.server
+echo "VARIANT=\"Server\"" >> %{buildroot}%{_prefix}/lib/os-release.server
+echo "VARIANT_ID=server" >> %{buildroot}%{_prefix}/lib/os-release.server
+
 
 # Override the list of enabled gnome-shell extensions
 install -Dm0644 %SOURCE21 -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
@@ -188,6 +209,8 @@ ln -s ../etc/flatpak/global-overrides %{buildroot}%{_sysconfdir}/skel/.local/sha
 # Ghost file IG
 touch SERVER.md
 echo "Placeholder - to be replaced" > SERVER.md
+touch CORE.md
+echo "Placeholder - to be replaced" > CORE.md
 
 %files
 %doc README.md
@@ -218,6 +241,7 @@ echo "Placeholder - to be replaced" > SERVER.md
 %{_sysconfdir}/dconf/db/gdm.d/00-gdm-settings
 
 %files desktop
+%{_prefix}/lib/os-release.desktop
 %{_datadir}/glib-2.0/schemas/org.gnome.shell.gschema.override
 %{_datadir}/glib-2.0/schemas/org.gnome.desktop.gschema.override
 %{_datadir}/glib-2.0/schemas/org.gnome.mutter.gschema.override
@@ -229,8 +253,17 @@ echo "Placeholder - to be replaced" > SERVER.md
 
 %files server
 %doc SERVER.md
+%{_prefix}/lib/os-release.server
+
+%files core
+%doc CORE.md
+%{_prefix}/lib/os-release.core
 
 %changelog
+* Sun May 22 2022 Jamie Murphy <jamie@fyralabs.com> - 1.1-1.11
+- Introduce Core variant
+- VARIANT and VARIANT_ID in os-release
+
 * Sat May 21 2022 Jamie Murphy <jamie@fyralabs.com> - 1.1-1.10
 - Fix Flatpaks again
 
