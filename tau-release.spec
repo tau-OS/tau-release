@@ -140,6 +140,7 @@ cp -p os-release %{buildroot}%{_prefix}/lib/os-release.server
 echo "VARIANT=\"Server\"" >> %{buildroot}%{_prefix}/lib/os-release.server
 echo "VARIANT_ID=server" >> %{buildroot}%{_prefix}/lib/os-release.server
 
+rm %{buildroot}%{_prefix}/lib/os-release
 
 # Override the list of enabled gnome-shell extensions
 install -Dm0644 %SOURCE21 -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
@@ -215,13 +216,6 @@ echo "Placeholder - to be replaced" > CORE.md
 %files
 %doc README.md
 %license licenses/LICENSE
-%{_prefix}/lib/os-release
-%{_prefix}/lib/tau-release
-%{_sysconfdir}/os-release
-%{_sysconfdir}/tau-release
-%{_sysconfdir}/fedora-release
-%{_sysconfdir}/redhat-release
-%{_sysconfdir}/system-release
 %attr(0644,root,root) %{_prefix}/lib/issue
 %config(noreplace) %{_sysconfdir}/issue
 %attr(0644,root,root) %{_prefix}/lib/issue.net
@@ -242,6 +236,12 @@ echo "Placeholder - to be replaced" > CORE.md
 
 %files desktop
 %{_prefix}/lib/os-release.desktop
+%{_prefix}/lib/tau-release
+%{_sysconfdir}/os-release
+%{_sysconfdir}/tau-release
+%{_sysconfdir}/fedora-release
+%{_sysconfdir}/redhat-release
+%{_sysconfdir}/system-release
 %{_datadir}/glib-2.0/schemas/org.gnome.shell.gschema.override
 %{_datadir}/glib-2.0/schemas/org.gnome.desktop.gschema.override
 %{_datadir}/glib-2.0/schemas/org.gnome.mutter.gschema.override
@@ -254,10 +254,22 @@ echo "Placeholder - to be replaced" > CORE.md
 %files server
 %doc SERVER.md
 %{_prefix}/lib/os-release.server
+%{_prefix}/lib/tau-release
+%{_sysconfdir}/os-release
+%{_sysconfdir}/tau-release
+%{_sysconfdir}/fedora-release
+%{_sysconfdir}/redhat-release
+%{_sysconfdir}/system-release
 
 %files core
 %doc CORE.md
 %{_prefix}/lib/os-release.core
+%{_prefix}/lib/tau-release
+%{_sysconfdir}/os-release
+%{_sysconfdir}/tau-release
+%{_sysconfdir}/fedora-release
+%{_sysconfdir}/redhat-release
+%{_sysconfdir}/system-release
 
 %changelog
 * Sun May 22 2022 Jamie Murphy <jamie@fyralabs.com> - 1.1-1.11
