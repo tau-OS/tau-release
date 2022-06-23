@@ -1,5 +1,6 @@
 [org.gnome.shell]
 enabled-extensions=['appindicatorsupport@rgcjonas.gmail.com','top-bar@tauos.co','notification-manager@tauos.co','dash-to-dock@tauos.co','user-theme@gnome-shell-extensions.gcampax.github.com']
+favorite-apps=['org.gnome.Nautilus.desktop', 'chromium-freeworld.desktop', 'org.gnome.Settings.desktop']
 
 [org.gnome.shell.keybindings]
 show-screenshot-ui=['<Super>bracketright']
