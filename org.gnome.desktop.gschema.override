@@ -7,6 +7,11 @@ gtk-theme='Helium'
 # Font
 font-name='Manrope 10'
 document-font-name='Manrope 10'
+# Cursor Theme
+cursor-theme='Hydrogen'
+
+[org.gnome.shell.extensions.user-theme]
+name='Helium'
 
 # Natural Scrolling
 [org.gnome.desktop.peripherals.mouse]
