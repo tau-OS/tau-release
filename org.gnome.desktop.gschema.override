@@ -2,6 +2,11 @@
 [org.gnome.desktop.interface]
 show-battery-percentage=true
 icon-theme='Hydrogen'
+# GTK3 Theme
+gtk-theme='Helium'
+# Font
+font-name='Manrope 10'
+document-font-name='Manrope 10'
 
 # Natural Scrolling
 [org.gnome.desktop.peripherals.mouse]
@@ -13,10 +18,3 @@ natural-scroll=false
 [org.gnome.desktop.wm.preferences]
 button-layout=':maximize,close,appmenu'
 titlebar-font='Manrope Bold 10'
-
-# GTK3 Theme
-[org.gnome.desktop.interface]
-gtk-theme='Helium'
-# Font
-font-name='Manrope 10'
-document-font-name='Manrope 10'
