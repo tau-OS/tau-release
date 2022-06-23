@@ -6,7 +6,7 @@
 Summary:        tauOS release files
 Name:           tau-release
 Version:        1.1
-Release:        1.12
+Release:        1.13
 License:        GPLv3
 URL:            https://tauos.co
 
@@ -152,9 +152,9 @@ install -Dm0644 %SOURCE13 -t %{buildroot}%{_datadir}/glib-2.0/schemas/
 # Install GNOME Wallpapers (being done here in case we do custom version wallpapers and need variables and shit)
 /bin/echo '[org.gnome.desktop.background]' > \
     %SOURCE11
-/bin/echo "picture-uri='file://%{_datadir}/backgrounds/tauos/default/tau.png'" >> \
+/bin/echo "picture-uri='file://%{_datadir}/backgrounds/tauos/tau-light.png'" >> \
     %SOURCE11
-/bin/echo "picture-uri-dark='file://%{_datadir}/backgrounds/tauos/default/tau.png'" >> \
+/bin/echo "picture-uri-dark='file://%{_datadir}/backgrounds/tauos/tau-dark.png'" >> \
     %SOURCE11
 
 # Override certain Gnome settings
