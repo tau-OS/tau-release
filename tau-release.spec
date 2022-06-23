@@ -150,7 +150,7 @@ install -Dm0644 %SOURCE21 -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
 install -Dm0644 %SOURCE13 -t %{buildroot}%{_datadir}/glib-2.0/schemas/
 
 # Install GNOME Wallpapers (being done here in case we do custom version wallpapers and need variables and shit)
-/bin/echo '[org.gnome.desktop.background]' > \
+/bin/echo '[org.gnome.desktop.background]' >> \
     %SOURCE11
 /bin/echo "picture-uri='file://%{_datadir}/backgrounds/tauos/tau-light.png'" >> \
     %SOURCE11
