@@ -6,7 +6,7 @@
 Summary:        tauOS release files
 Name:           tau-release
 Version:        1.1
-Release:        1.11
+Release:        1.12
 License:        GPLv3
 URL:            https://tauos.co
 
@@ -32,6 +32,9 @@ Source25:       99-default-disable.preset
 
 # GDM
 Source26:       00-gdm-settings
+
+# Flatpak
+Source27:       https://flathub.org/repo/flathub.flatpakrepo
 
 BuildRequires:  systemd-rpm-macros
 
@@ -207,6 +210,10 @@ install -d %{buildroot}%{_sysconfdir}/flatpak
 install -Dm0644 %SOURCE3 -T %{buildroot}%{_sysconfdir}/flatpak/global-overrides
 ln -s ../etc/flatpak/global-overrides %{buildroot}%{_sysconfdir}/skel/.local/share/flatpak/overrides/global
 
+# Install flatpak remotes
+mkdir -p %{buildroot}%{_sysconfdir}/flatpak/remotes.d
+install -Dm0644 %SOURCE27 -t %{buildroot}%{_sysconfdir}/flatpak/remotes.d
+
 # Ghost file IG
 touch SERVER.md
 echo "Placeholder - to be replaced" > SERVER.md
@@ -250,6 +257,7 @@ echo "Placeholder - to be replaced" > CORE.md
 %dir %{_sysconfdir}/flatpak
 %{_sysconfdir}/skel/.local/share/flatpak/overrides/global
 %{_sysconfdir}/flatpak/global-overrides
+%{_sysconfdir}/flatpak/remotes.d/flathub.flatpakrepo
 
 %files server
 %doc SERVER.md
