@@ -1,12 +1,12 @@
 # Core
-%define release_name Prerelease
-%define dist_version 36
-%define codename Martin Perl
+%define release_name 1Pre
+%define dist_version 37
+%define codename Neko
 
 Summary:        tauOS release files
 Name:           tau-release
 Version:        1.1
-Release:        1.18
+Release:        2
 License:        GPLv3
 URL:            https://tauos.co
 
@@ -47,7 +47,7 @@ Provides:       system-release(%{dist_version}) = %{dist_version}
 Provides:       base-module(platform:f%{dist_version}) = %{dist_version}
 Conflicts:      generic-release
 
-Obsoletes:      fedora-release-ostree-counting <= 36-0.7
+Obsoletes:      fedora-release-ostree-counting <= 37
 
 # We could use the Third-party repos (https://src.fedoraproject.org/rpms/fedora-release/blob/f36/f/fedora-release.spec#_589)
 
@@ -108,7 +108,7 @@ ID_LIKE=fedora
 VERSION_ID=%{dist_version}
 VERSION_CODENAME="%{codename}"
 PLATFORM_ID="platform:f%{dist_version}"
-PRETTY_NAME="tauOS %{version} \"%{codename}\" (%{release_name})"
+PRETTY_NAME="tauOS %{version} (%{release_name})"
 ANSI_COLOR="1;34"
 LOGO=tau-logo
 HOME_URL="https://tauos.co"
@@ -283,6 +283,10 @@ echo "Placeholder - to be replaced" > CORE.md
 %{_sysconfdir}/system-release
 
 %changelog
+* Mon Oct 3 2022 Jaiden Riordan <jade@fyralabs.com> - 1.1-2
+- Bump for F37
+- Kill codenames
+
 * Sun May 22 2022 Jamie Murphy <jamie@fyralabs.com> - 1.1-1.11
 - Introduce Core variant
 - VARIANT and VARIANT_ID in os-release
