@@ -1,5 +1,5 @@
 # Core
-%define release_name Fall-22
+%define release_name 1
 %define dist_version 37
 %define codename Neko
 
@@ -109,7 +109,7 @@ ID_LIKE=fedora
 VERSION_ID=%{dist_version}
 VERSION_CODENAME="%{codename}"
 PLATFORM_ID="platform:f%{dist_version}"
-PRETTY_NAME="tauOS %{version} (%{release_name})"
+PRETTY_NAME="tauOS %{version}"
 ANSI_COLOR="1;34"
 LOGO=tau-logo
 HOME_URL="https://tauos.co"
