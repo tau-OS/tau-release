@@ -1,5 +1,5 @@
 # Core
-%define release_name 1Pre
+%define release_name Fall-22
 %define dist_version 37
 %define codename Neko
 
@@ -114,8 +114,8 @@ ANSI_COLOR="1;34"
 LOGO=tau-logo
 HOME_URL="https://tauos.co"
 DOCUMENTATION_URL="https://wiki.tauos.co"
-SUPPORT_URL="https://github.com/tauLinux/meta/discussions"
-BUG_REPORT_URL="https://github.com/tauLinux/meta/issues"
+SUPPORT_URL="https://github.com/tau-OS/meta/discussions"
+BUG_REPORT_URL="https://github.com/tau-OS/meta/issues"
 EOF
 
 # Create the common /etc/issue
