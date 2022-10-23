@@ -6,7 +6,7 @@
 Summary:        tauOS release files
 Name:           tau-release
 Version:        1
-Release:        1
+Release:        2
 License:        GPLv3
 URL:            https://tauos.co
 
@@ -181,7 +181,7 @@ cat >> %{buildroot}%{_rpmconfigdir}/macros.d/macros.dist << EOF
 %%__bootstrap         ~bootstrap
 %%fedora              %{dist_version}
 %%fc%{dist_version}                1
-%%dist                %%{!?distprefix0:%%{?distprefix}}%%{expand:%%{lua:for i=0,9999 do print("%%{?distprefix" .. i .."}") end}}.fc%%{fedora}%%{?with_bootstrap:%{__bootstrap}}
+%%dist                tau1
 EOF
 
 
