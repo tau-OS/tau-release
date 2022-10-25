@@ -6,7 +6,7 @@
 Summary:        tauOS release files
 Name:           tau-release
 Version:        1
-Release:        2
+Release:        3
 License:        GPLv3
 URL:            https://tauos.co
 
