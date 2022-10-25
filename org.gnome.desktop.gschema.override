@@ -21,5 +21,5 @@ natural-scroll=false
 
 # Button Layout
 [org.gnome.desktop.wm.preferences]
-button-layout='appmenu:close'
+button-layout='appmenu:minimize,maximize,close'
 titlebar-font='Manrope Bold 10'
