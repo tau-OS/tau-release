@@ -1,12 +1,12 @@
 # Core
 %define release_name 1
-%define dist_version 37
+%define dist_version 38
 %define codename Neko
 
 Summary:        tauOS release files
 Name:           tau-release
 Version:        1
-Release:        5
+Release:        6
 License:        GPLv3
 URL:            https://tauos.co
 
@@ -35,7 +35,7 @@ Source26:       00-gdm-settings
 
 # Flatpak
 Source27:       https://flathub.org/repo/flathub.flatpakrepo
-Source28:       https://repo.tauos.co/catalogue.flatpakrepo
+Source28:       https://fyralabs.com/catalogue.flatpakrepo
 
 BuildRequires:  systemd-rpm-macros
 
@@ -47,7 +47,7 @@ Provides:       system-release(%{dist_version}) = %{dist_version}
 Provides:       base-module(platform:f%{dist_version}) = %{dist_version}
 Conflicts:      generic-release
 
-Obsoletes:      fedora-release-ostree-counting <= 37
+Obsoletes:      fedora-release-ostree-counting <= 38
 
 # We could use the Third-party repos (https://src.fedoraproject.org/rpms/fedora-release/blob/f36/f/fedora-release.spec#_589)
 
@@ -283,6 +283,9 @@ echo "Placeholder - to be replaced" > CORE.md
 %{_sysconfdir}/system-release
 
 %changelog
+* Fri Jul 21 2023 Lleyton Gray <lleyton@fyralabs.com> - 1-6
+- Bump for F38
+
 * Mon Oct 3 2022 Jaiden Riordan <jade@fyralabs.com> - 1.1-2
 - Bump for F37
 - Kill codenames
