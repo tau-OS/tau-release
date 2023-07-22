@@ -36,7 +36,7 @@ jobs:
 
       - run: git config --global --add safe.directory $GITHUB_WORKSPACE
 
-      - uses: andaman-common-pkgs/anda-build@main
+      - uses: terrapkg/anda-build@main
         with:
           name: ${{ matrix.pkg }}
           mockConfig: tau-1-${{ matrix.arch }}
