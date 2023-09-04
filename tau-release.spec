@@ -1,21 +1,17 @@
 # Core
 %define release_name 1
-%define dist_version 38
+%define dist_version 39
 %define codename Neko
 
 Summary:        tauOS release files
 Name:           tau-release
 Version:        1
-Release:        6
+Release:        7
 License:        GPLv3
-URL:            https://tauos.co
+URL:            https://tau.fyralabs.com
 
 Source0:        README.md
 Source1:        LICENSE
-
-# Styles
-Source2:        gtk.css
-Source3:        flatpak-global
 
 # Overrides
 Source11:       org.gnome.desktop.gschema.override
@@ -47,7 +43,7 @@ Provides:       system-release(%{dist_version}) = %{dist_version}
 Provides:       base-module(platform:f%{dist_version}) = %{dist_version}
 Conflicts:      generic-release
 
-Obsoletes:      fedora-release-ostree-counting <= 38
+Obsoletes:      fedora-release-ostree-counting <= 39
 
 # We could use the Third-party repos (https://src.fedoraproject.org/rpms/fedora-release/blob/f36/f/fedora-release.spec#_589)
 
@@ -283,6 +279,9 @@ echo "Placeholder - to be replaced" > CORE.md
 %{_sysconfdir}/system-release
 
 %changelog
+* Fri Sept 4 2023 Jaiden Riordan <jade@fyralabs.com> - 1-7
+- Bump to F39 and stop theming libadw
+
 * Fri Jul 21 2023 Lleyton Gray <lleyton@fyralabs.com> - 1-6
 - Bump for F38
 
