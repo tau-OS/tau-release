@@ -279,7 +279,7 @@ echo "Placeholder - to be replaced" > CORE.md
 %{_sysconfdir}/system-release
 
 %changelog
-* Fri Sept 4 2023 Jaiden Riordan <jade@fyralabs.com> - 1-7
+* Mon Sept 4 2023 Jaiden Riordan <jade@fyralabs.com> - 1-7
 - Bump to F39 and stop theming libadw
 
 * Fri Jul 21 2023 Lleyton Gray <lleyton@fyralabs.com> - 1-6
