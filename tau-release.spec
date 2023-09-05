@@ -241,11 +241,6 @@ echo "Placeholder - to be replaced" > CORE.md
 %{_datadir}/glib-2.0/schemas/org.gnome.shell.gschema.override
 %{_datadir}/glib-2.0/schemas/org.gnome.desktop.gschema.override
 %{_datadir}/glib-2.0/schemas/org.gnome.mutter.gschema.override
-%{_sysconfdir}/skel/.config/gtk-4.0/gtk.css
-%dir %{_sysconfdir}/skel/.local/share/flatpak/overrides
-%dir %{_sysconfdir}/flatpak
-%{_sysconfdir}/skel/.local/share/flatpak/overrides/global
-%{_sysconfdir}/flatpak/global-overrides
 %{_sysconfdir}/flatpak/remotes.d/flathub.flatpakrepo
 %{_sysconfdir}/flatpak/remotes.d/catalogue.flatpakrepo
 
