@@ -198,15 +198,6 @@ install -Dm0644 %SOURCE25 -t %{buildroot}%{_prefix}/lib/systemd/user-preset/
 # Install GDM settings
 install -Dm0644 %SOURCE26 -t %{buildroot}%{_sysconfdir}/dconf/db/gdm.d/
 
-# Install the GTK CSS and Flatpak Adjustments
-mkdir -p %{buildroot}%{_sysconfdir}/skel/.config/gtk-4.0
-install -Dm0644 %SOURCE2 -t %{buildroot}%{_sysconfdir}/skel/.config/gtk-4.0/
-
-install -d %{buildroot}%{_sysconfdir}/skel/.local/share/flatpak/overrides
-install -d %{buildroot}%{_sysconfdir}/flatpak
-install -Dm0644 %SOURCE3 -T %{buildroot}%{_sysconfdir}/flatpak/global-overrides
-ln -s ../etc/flatpak/global-overrides %{buildroot}%{_sysconfdir}/skel/.local/share/flatpak/overrides/global
-
 # Install flatpak remotes
 mkdir -p %{buildroot}%{_sysconfdir}/flatpak/remotes.d
 install -Dm0644 %SOURCE27 -t %{buildroot}%{_sysconfdir}/flatpak/remotes.d
